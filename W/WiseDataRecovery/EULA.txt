@@ -1,0 +1,27 @@
+﻿END USER LICENSE AGREEMENT
+==========================
+PLEASE READ THIS END USER LICENSE AGREEMENT ("EULA") BEFORE USING THIS SOFTWARE. BY USING THIS SOFTWARE, YOU ARE AGREEING TO BE BOUND BY THE TERMS OF THIS LICENSE. IF YOU DO NOT AGREE TO THESE TERMS, PROMPTLY CEASE ALL FURTHER INSTALLATION OR USE OF THE SOFTWARE.
+
+PROPRIETARY RIGHTS
+
+This software product is protected by copyright laws and international copyright treaties. All rights not currently granted in this license agreement are reserved entirely to WiseCleaner.com. This Agreement does not grant you any rights to patents, copyrights, trade secrets, trade names, trademarks, or any other rights, functions or licenses in respect of the Software. 
+
+LICENSE
+
+Wise Data Recovery is a freeware. You can feel free to use and distribute this program, license grants the End User to install the Software Product in non-commercial environment and for non-commercial purpose. (If you want to use and distribute this program in commercial environment or for commercial purpose, you should contact us and get our permission.) 
+
+DISTRIBUTION
+
+Copies of Wise Data Recovery may be distributed in accordance to the following terms:
+
+The files are distributed in their entirety. 
+No alteration is made to the files,  including changing or removing any messages.  
+
+LIABILITY
+
+We try to keep our software as bug-free as possible. But it's a general rule that no software ever is error free, and the number of errors increases with the complexity of the program. So, in no event will WiseCleaner.com be liable for any damages, including any loss of profits, or other incidental or consequential damages.
+
+TERMINATION
+
+This License will terminate immediately, automatically and without notice if LICENSEE fails to comply with any provision of this Agreement.
+

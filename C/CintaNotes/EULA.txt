@@ -1,0 +1,141 @@
+END-USER LICENSE AGREEMENT FOR CINTANOTES 
+
+IMPORTANT! PLEASE READ THE TERMS AND CONDITIONS OF THIS LICENSE AGREEMENT CAREFULLY BEFORE CONTINUING WITH THIS PROGRAM INSTALL: 
+
+Sitex End-User License Agreement ("EULA") is a legal agreement between you (either an individual or a single entity) and Sitex OOO (the SOFTWARE PROVIDER) for the SOFTWARE PROVIDER’s software product “CintaNotes” (the SOFTWARE PRODUCT) which may include associated software components, media, printed materials, and "online" or electronic documentation. By installing, copying, or otherwise using the SOFTWARE PRODUCT, you agree to be bound by the terms of this EULA. This license agreement represents the entire agreement concerning the SOFTWARE PRODUCT between you and the SOFTWARE PROVIDER, (referred to as "licenser"), and it supersedes any prior proposal, representation, or understanding between the parties. If you do not agree to the terms of this EULA, do not install or use the SOFTWARE PRODUCT. 
+
+The SOFTWARE PRODUCT is protected by copyright laws and international copyright treaties, as well as other intellectual property laws and treaties. The SOFTWARE PRODUCT is licensed, not sold. 
+
+1. GRANT OF LICENSE. 
+
+The SOFTWARE PRODUCT is licensed as follows: 
+
+(a) Installation and Use.
+SOFTWARE PROVIDER grants you the right to install and/or use copies of the SOFTWARE PRODUCT on your computers running a validly licensed copy of the operating system for which the SOFTWARE PRODUCT was designed [e.g., Windows XP, Windows Vista, Windows 7]. 
+
+(b) License Types
+All Licenses are granted to users, not computers or sites. All licenses can be used for personal, commercial purposes and general use and/or in a business environment. There are 2 (two) types of license under which the SOFTWARE PRODUCT may be used.
+
+(i) Basic (Free) License.
+The Basic (Free) License is provided by default and doesn't need to be purchased, however certain features of the SOFTWARE PRODUCT will be disabled and not available to use.
+The Basic (Free) License does not expire, but the SOFTWARE PROVIDER does not provide any guarantee that updates to the SOFTWARE PRODUCT will be available to Basic (Free) License holders.
+
+(ii) Pro License.
+The Pro License grants you the license for the SOFTWARE PRODUCT with all features and functionality.
+The Pro License restricts the use of the SOFTWARE PRODUCT to the person the SOFTWARE PRODUCT is registered to.
+The Pro License does not expire and Pro License holders are entitled to free updates for 12 months following the date of purchase. After this period you may purchase an extension to the free update period. 
+
+(c) Backup Copies.
+You may also make copies of the SOFTWARE PRODUCT as may be necessary for backup and archival purposes.
+
+2. DESCRIPTION OF OTHER RIGHTS AND LIMITATIONS.
+
+(a) Maintenance of Copyright Notices.
+You must not remove or alter any copyright notices on any and all copies of the SOFTWARE PRODUCT.
+
+(b) Distribution.
+You may not distribute license keys or registered copies of the SOFTWARE PRODUCT to third parties. The SOFTWARE PRODUCT is available for download from the SOFTWARE PROVIDER's website and may be used free of charge under the terms of Basic (Free) license. 
+
+(c) Prohibition on Reverse Engineering, Decompilation, and Disassembly.
+You may not reverse engineer, decompile, or disassemble the SOFTWARE PRODUCT, except and only to the extent that such activity is expressly permitted by applicable law notwithstanding this limitation. 
+
+(d) Rental.
+You may not rent, lease, or lend the SOFTWARE PRODUCT.
+
+e) Support Services.
+The SOFTWARE PROVIDER may provide you with support services related to the SOFTWARE PRODUCT ("Support Services"). Any supplemental software code provided to you as part of the Support Services shall be considered part of the SOFTWARE PRODUCT and subject to the terms and conditions of this EULA. 
+
+Information use:
+We need the information to process your orders and offer better services to you; we want to make it easier to tailor our products and services to your particular needs. This Personal Information also may be used to contact you about sales, special offers and new SOFTWARE PRODUCT features, unless you have elected not to receive promotional communications in connection with this website. However, if you do not like receive promotion emails from us, we will respect you wish.
+
+(f) Compliance with Applicable Laws.
+You must comply with all applicable laws regarding use of the SOFTWARE PRODUCT.
+
+3. TERMINATION 
+
+(a) Refund Policy.
+You have the right for a refund within 30 days after the purchase. In the event a refund is issued, your License is terminated and you agree to destroy all installations and all copies of the SOFTWARE PRODUCT in your possession.
+
+(b) Non-compliance.
+Without prejudice to any other rights, SOFTWARE PROVIDER may terminate this EULA if you fail to comply with the terms and conditions of this EULA. In such event, you must destroy all installations and all copies of the SOFTWARE PRODUCT in your possession.
+
+4. COPYRIGHT
+
+The SOFTWARE PROVIDER or its suppliers own all title, including but not limited to copyrights, in and to the SOFTWARE PRODUCT and any copies thereof. All title and intellectual property rights in and to the content which may be accessed through use of the SOFTWARE PRODUCT is the property of the respective content owner and may be protected by applicable copyright or other intellectual property laws and treaties. This EULA grants you no rights to use such content. The SOFTWARE PROVIDER reserves all rights not expressly granted. 
+
+5. NO WARRANTIES
+
+The SOFTWARE PROVIDER expressly disclaims any warranty for the SOFTWARE PRODUCT. The SOFTWARE PRODUCT is provided 'As Is' without any express or implied warranty of any kind, including but not limited to any warranties of merchantability, noninfringement, or fitness of a particular purpose. The SOFTWARE PROVIDER does not warrant or assume responsibility for the accuracy or completeness of any information, text, graphics, links or other items contained within the SOFTWARE PRODUCT. The SOFTWARE PROVIDER makes no warranties respecting any harm that may be caused by the transmission of a computer virus, worm, time bomb, logic bomb, or other such computer program. The SOFTWARE PROVIDER further expressly disclaims any warranty or representation to Authorized Users or to any third party.
+
+6. LIMITATION OF LIABILITY
+
+In no event shall the SOFTWARE PROVIDER be liable for any damages (including, without limitation, lost profits, business interruption, or lost information) rising out of 'Authorized Users' use of or inability to use the SOFTWARE PRODUCT, even if the SOFTWARE PROVIDER has been advised of the possibility of such damages. In no event will the SOFTWARE PROVIDER be liable for loss of data or for indirect, special, incidental, consequential (including lost profit), or other damages based in contract, tort or otherwise. The SOFTWARE PROVIDER shall have no liability with respect to the content of the SOFTWARE PRODUCT or any part thereof, including but not limited to errors or omissions contained therein, libel, infringements of rights of publicity, privacy, trademark rights, business interruption, personal injury, loss of privacy, moral rights or the disclosure of confidential information.
+
+7. OPEN SOURCE SOFTWARE LICENSES
+
+CintaNotes uses open source libraries; below you can find licenses of each of them.
+
+base64 (http://www.coolsoft-sd.com)
+Copyright (C) 2007 Coolsoft Company. All rights reserved.
+http://www.coolsoft-sd.com/
+
+This software is provided 'as-is', without any express or implied warranty.
+In no event will the authors be held liable for any damages arising from the use of this software. 
+
+Permission is granted to anyone to use this software for any purpose, including commercial applications, and to alter it and redistribute it freely, subject to the following restrictions: 
+
+* The origin of this software must not be misrepresented; you must not claim that you wrote the original software. If you use this software in a product, an acknowledgment in the product documentation would be appreciated but is not required.
+* Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software. 
+* This notice may not be removed or altered from any source distribution.
+
+OpenSSL (http://openssl.org)
+Copyright (c) 1998-2011 The OpenSSL Project.  All rights reserved.
+Full license: https://www.openssl.org/source/license.html
+
+pugixml (http://pugixml.org)
+Copyright (c) 2006-2015 Arseny Kapoulkine
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+SQLCipher (https://www.zetetic.net/sqlcipher)
+
+Copyright (c) 2008-2012 Zetetic LLC
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+* Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+* Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+* Neither the name of the ZETETIC LLC nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY ZETETIC LLC ''AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL ZETETIC LLC BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+SQLite (http://sqlite.org)
+
+SQLite Copyright
+
+SQLite is in the Public Domain
+
+All of the code and documentation in SQLite has been dedicated to the public domain by the authors. All code authors, and representatives of the companies they work for, have signed affidavits dedicating their contributions to the public domain and originals of those signed affidavits are stored in a firesafe at the main offices of Hwaci. Anyone is free to copy, modify, publish, use, compile, sell, or distribute the original SQLite code, either in source code form or as a compiled binary, for any purpose, commercial or non-commercial, and by any means.
+
+The previous paragraph applies to the deliverable code and documentation in SQLite - those parts of the SQLite library that you actually bundle and ship with a larger application. Some scripts used as part of the build process (for example the "configure" scripts generated by autoconf) might fall under other open-source licenses. Nothing from these build scripts ever reaches the final deliverable SQLite library, however, and so the licenses associated with those scripts should not be a factor in assessing your rights to copy and use the SQLite library.
+
+All of the deliverable code in SQLite has been written from scratch. No code has been taken from other projects or from the open internet. Every line of code can be traced back to its original author, and all of those authors have public domain dedications on file. So the SQLite code base is clean and is uncontaminated with licensed code from other projects.
+
+zLib (http:://zlib.net)
+
+Copyright (C) 1995-2013 Jean-loup Gailly and Mark Adler
+
+This software is provided 'as-is', without any express or implied warranty.  In no event will the authors be held liable for any damages arising from the use of this software.
+
+Permission is granted to anyone to use this software for any purpose, including commercial applications, and to alter it and redistribute it freely, subject to the following restrictions:
+
+1. The origin of this software must not be misrepresented; you must not claim that you wrote the original software. If you use this software in a product, an acknowledgment in the product documentation would be appreciated but is not required.
+2. Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software.
+3. This notice may not be removed or altered from any source distribution.
+
+Jean-loup GaillyMark Adler
+jloup@gzip.org  madler@alumni.caltech.eduCopyright (c) 2008-2012 Zetetic LLC

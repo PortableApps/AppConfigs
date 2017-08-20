@@ -1,0 +1,25 @@
+The software FreeCommander is property of the author:
+Marek Jasinski
+info@freecommander.com
+
+INSTALLATION OR USE OF THE ENCLOSED SOFTWARE INDICATES YOUR ASSENT TO THE FOLLOWING LICENSE AGREEMENT.
+
+The software FreeCommander is freeware and can be used freely, copied and given to third parties under the following terms:
+
+1. You can use the software free of charge for private and professional purposes. You may not however sell it for profit and you may not bundle FreeCommander in other software packages without affirmation of the author.
+
+2. You may offer a version of the program labeled as 'public' on a website that is free of charge for download or you can give exact copies of the original software to anyone. Under menu "Help - > About..." you can check if the version is marked as 'public'. Versions that are not marked as 'public' must not be distributed.
+
+3. For any other form of publication, the author’s written permission is necessary.
+
+4. The software remains property of the author also in case of dissemination to third parties.
+
+5. The software, especially the name of the software and the name of the author must remain unmodified.
+
+6. THIS SOFTWARE IS PROVIDED FREE OF CHARGE AND ON AN “AS IS” BASIS, WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED INCLUDING WITHOUT LIMITATION THE WARRANTIES THAT IT IS FREE OF DEFECTS, MERCHANTABLE, FIT FOR A PARTICULAR PURPOSE OR NON-INFRINGING. THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE SOFTWARE IS WITH YOU. SHOULD THE SOFTWARE PROVE DEFECTIVE, YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR, OR CORRECTION.
+
+7. IN NO EVENT SHALL THE AUTHOR, COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MAY REDISTRIBUTE THE SOFTWARE BE LIABLE TO YOU FOR DAMAGES, INCLUDING ANY GENERAL, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE SOFTWARE (INCLUDING, BUT NOT LIMITED TO, LOSS OF DATA, DATA BEING RENDERED INACCURATE, LOSS OF BUSINESS PROFITS, LOSS OF BUSINESS INFORMATION, BUSINESS INTERRUPTIONS, LOSS SUSTAINED BY YOU OR THIRD PARTIES, OR A FAILURE OF THE SOFTWARE TO OPERATE WITH ANY OTHER SOFTWARE) EVEN IF THE AUTHOR, COPYRIGHT HOLDER, OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+8. VIOLATION OR NON-ACCEPTANCE OF ANY OF THE ABOVE TERMS IMMEDIATELY AND UNCONDITIONALLY WILL TERMINATE YOUR LICENSE.
+
+By downloading and installing the software, you agree to be legally bound by these terms of license.

@@ -1,0 +1,69 @@
+AniFX v1.0 License
+
+"Author" herein refers to Attila Kovrig (the creator of AniFX).
+"Software" refers to all files included with AniFX (typically
+installed by the installer or extracted from a .zip archive).
+
+Except where otherwise noted, all of the documentation and 
+Software is copyrighted by Attila Kovrig (the Author).
+
+Copyright (C) 2005-2008 Attila Kovrig. All rights reserved.
+ 
+
+License and costs
+
+The Software is being distributed as Freeware. 
+Use and distribution of the Software is permitted provided 
+that all of the following terms are accepted:
+
+1. The Author grants you a non-exclusive license to use the
+    Software subject to your compliance with all of the terms 
+    and conditions of this Freeware License.
+
+2. You are only granted a license for the machine-readable, 
+    object code portion of the Software. You will not modify, 
+    enhance, reverse engineer or otherwise alter the Software 
+    from its current state.
+
+3. You will not have any proprietary rights of the Software. 
+    You acknowledge and agree that the Author retains all 
+    copyrights and other proprietary rights of the Software.
+
+4. The Software is provided "as-is," without any express or 
+    implied warranty. Without even the implied warranty of 
+    merchantability and fitness for a particular purpose. In 
+    no event shall the Author be held liable for any, direct or 
+    indirect, damages arising from the use of the Software.
+
+5. All redistributions of the Software's files must be in their 
+    original, unmodified form. Distributions of modified 
+    versions of the files is not permitted without express 
+    written permission of the Author.
+
+6. All redistributions of the Software's files must retain all 
+    copyright notices and web site addresses that are 
+    currently in place, and must include this list of 
+    conditions without modification.
+
+7. None of the Software's files may be redistributed for 
+    profit or as part of another Software package without 
+    express written permission of the Author.
+
+8. Use of the Software within the scope of this license is 
+    free of charge  and no royalty or licensing fees shall be 
+    payable by you. Use beyond the scope of this license 
+    shall constitute copyright infringement.
+
+9. This license shall be effective and bind you upon your 
+    downloading of the Software.
+
+10. The Author reserves his rights to modify this agreement 
+      in the future.
+
+If you do not agree to all of the above terms, you are not 
+permitted to use the Software in any way, and all copies of 
+it must be deleted from your system(s).
+
+Attila Kovrig
+Web: http://icofx.ro/
+E-Mail: icofxsoftware@gmail.com

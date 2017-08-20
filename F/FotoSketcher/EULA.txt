@@ -1,0 +1,42 @@
+FotoSketcher License Notice
+
+Copyright (C) 2007-2011 David THOIRON. All rights reserved. "The Author" herein refers to David THOIRON (the creator of FotoSketcher). "The Software" refers to all files included with FotoSketcher. Except where otherwise noted, all of the documentation and software is copyrighted by the Author.
+
+----- License and costs -----
+
+The Software is being distributed as Freeware. Use and distribution of the Software is permitted provided that all of the following terms are accepted:
+
+- The Author grants you a non-exclusive license to use the Software subject to your compliance with all of the terms and conditions of this Freeware License.
+
+- You are only granted a license for the machine-readable, object code portion of the Software. You are not allowed to modify, enhance, reverse engineer or otherwise alter the Software from its current state.
+
+- You will not have any proprietary rights of the Software. You acknowledge and agree that the Author retains all copyrights and other proprietary rights of the Software.
+
+- The Software is provided "as-is," without any express or implied warranty. Without even the implied warranty of merchantability and fitness for a particular purpose. In no event shall the Author be held liable for any, direct or indirect, damages arising from the use of the Software.
+
+- All redistributions of the Software's files must be in their original, unmodified form. Distributions of modified versions of the files is not permitted without express written permission of the Author.
+
+- All redistributions of the Software's files must retain all copyright notices and web site addresses that are currently in place, and must include this list of conditions without modification.
+
+- None of the Software's files may be redistributed for profit or as part of another Software package without express written permission of the Author.
+
+- Use of the Software within the scope of this license is free of charge and no royalty or licensing fees shall be payable by you. Use beyond the scope of this license shall constitute copyright infringement.
+
+- This license shall be effective and bind you upon your downloading of the Software.
+
+- The Author reserves his rights to modify this agreement in the future.
+
+If you do not agree to all of the above terms, you are not permitted to use the Software in any way, and all copies of it must be deleted from your system(s).
+
+----- Privacy policy -----
+
+The present Privacy Policy governs all Internet-related communications for the FotoSketcher website and the FotoSketcher application.
+
+Guiding Principles
+The following principles guide all of our online communications:
+
+- We are committed to protecting the privacy of FotoSketcher users and visitors to the FotoSketcher website. 
+- We do not gather personal information about users of our software or other visitors to our website.
+- We do not send unsolicited email to users of our software or other visitors to our website. 
+- We will only use email to reply to email messages from users of our software or visitors to our website or to engage in other communication.
+- We do not use cookies (the term "cookie" refers to files that are transferred from a website to your computer's hard drive. The purpose of cookies is to enable the host website to track your activities on their website).

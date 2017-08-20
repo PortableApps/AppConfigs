@@ -1,0 +1,4 @@
+Please note that Sunbird is no longer maintained by Mozilla and should not be used in a production or day-to-day environment.  PortableApps.com is making this final release available as a convenience to existing users and for testing purposes.
+
+Users should transition to using Thunderbird with the Lightning extension for their calendar needs.  A guide on migrating is available here:
+http://kb.mozillazine.org/Migrating_from_Sunbird_to_Lightning

@@ -1,0 +1,2 @@
+﻿Warning: This is NOT A FINAL OR PRE-RELEASE VERSION. This program is provided without any guarantees of stability, so please use it at your own risk. It is recommended that you back up your profile regularly, as there may be bugs that corrupt your data. If that sounds scary, you should stick to the latest version of Mozilla Firefox, Portable Edition, which you can download here:
+http://portableapps.com/apps/internet/firefox_portable

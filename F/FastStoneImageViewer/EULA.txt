@@ -1,0 +1,16 @@
+Please read the following terms and conditions carefully before using FastStone Image Viewer. Use of this software indicates you accept the terms of this license agreement and warranty.
+
+Disclaimer of Warranty
+
+FastStone Image Viewer (this software) is provided "as-is" and without warranty of any kind, express, implied or otherwise, including without limitation, any warranty of merchantability or fitness for a particular purpose. In no event shall the author of this software be held liable for data loss, damages, loss of profits or any other kind of loss while using or misusing this software.
+
+License
+
+FastStone Image Viewer is free for personal and educational (including non-profit organization) use. In these cases, you are granted the right to use and to make an unlimited number of copies of this software. For commercial use, it is required to register.
+Visit http://www.faststone.org/order.htm to find out how to obtain license for commercial use.
+
+Restrictions on Use
+
+FastStone Image Viewer must not be decompiled, disassembled, reverse engineered or otherwise modified.
+
+Copyright (C) 2017 FastStone Soft. All rights reserved.

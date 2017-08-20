@@ -1,0 +1,36 @@
+License Information for "AndreaMosaic" Information Appliance
+Copyright 1997-2015 Andrea Denzler. All Rights Reserved. License date 9 August 2015, version 1.2.
+
+1. CREDIT. Every Mosaic (or derivative work) created and published (or distributed in any way) must include a credit text to AndreaMosaic. The credit text should state "Mosaic created with AndreaMosaic" or a text with a similar meaning and it can be written in the language of the target audience. The credit text is not required to interfere with the mosaic artwork but who sees the mosaic should be able to find out that AndreaMosaic software was used to create it. All other aspects of the credit text (e.g., size, style, duration, location, etc.) are at the sole discretion of the publisher but must comply with above requirement. Any of the following examples comply with this requirement and also other similar examples are accepted:
+* In a Mosaic Image published on the Web a small text somewhere with a hyper-link to AndreaMosaics web page.
+* In a Mosaic printed and published on a wall a small credit text can be placed on a informative note to be placed near the mosaic. The informative note can contain other text too.
+* In a Movie / TV Show / Web Video the credit text can be placed in the end credits of the Movie / Episode / Web Video. 
+* In a Mosaic published on any media (including web, printing, broadcasting, TV, etc) the credit text can be included in the informative details published together with the mosaic.
+
+2. NOTIFICATION. If a Mosaic (or derivative work) will be viewed (or was viewed) by a large audience (over 50.000 times/views/persons) then you must inform Andrea Denzler ("the AUTHOR") about this event via the AndreaMosaic web site "http://andreaplanet.com/andreamosaic".
+
+3. DONATION. Please support this software with a donation. It is not required but suggested to support the development. If you use AndreaMosaic commercially (i.e. you get any profit with it), then you really should support it, proportionally to the value the program is giving you.
+
+4. LICENSE GRANT.   Andrea Denzler ("the AUTHOR") grants you a non-exclusive and non-transferable license to use the SOFTWARE for personal or business purposes.  "The SOFTWARE" refers to the AndreaMosaic executable file itself as well as all related data, text and other files contained in the AndreaMosaic distribution package. This license does not entitle you to receive from AUTHOR hard-copy documentation, technical support, telephone assistance, or enhancements or updates to the SOFTWARE.
+
+5. OWNERSHIP.  The SOFTWARE is owned and copyrighted by the AUTHOR.  Your license confers no title or ownership in the SOFTWARE and should not be construed as a sale of any right in the SOFTWARE.
+
+6. COPYRIGHT.  The SOFTWARE is protected by United States copyright law and international treaty provisions. You acknowledge that no title to the intellectual property in the SOFTWARE is transferred to you. You agree that any copies of the SOFTWARE you create will contain the same proprietary notices which appear on and in the SOFTWARE.
+
+7. DISTRIBUTION. You are NOT authorized to publish any part of this software on Internet or other media, but you can distribute a whole copy of the software to friends, family, collegues. Please contact Andrea Denzler ("the AUTHOR") to obtain a written permission to distribute widely the software on CD-ROM or other physical media (for example to be included with a Computer Magazine). If you are publishing a review of the software then you may can use the links to the AndreaMosaic website to allow a direct download of the software. You are NOT authorized to sell this application. You are NOT authorized to distribute a modified version or part of this software to anyone.
+
+8. REVERSE ENGINEERING.  You may not decompile, reverse engineer, or disassemble the SOFTWARE. You may not modify, rent or resell for profit the SOFTWARE. You may not remove any copyright notices from the SOFTWARE.  You may not create derivative works based upon the SOFTWARE, including but not limited to modification of the SOFTWARE's text to other languages, without the permission of the AUTHOR.
+
+9. SEVERABILITY.  In the event of invalidity of any provision of this license, the parties agree that such invalidity shall not affect the validity of the remaining portions of this license.
+
+10. EXCLUSION OF OTHER WARRANTIES.  EXCEPT AS PROVIDED ABOVE, THE SOFTWARE IS PROVIDED "AS IS" WITHOUT ANY EXPRESS OR IMPLIED WARRANTY OF ANY KIND INCLUDING WARRANTIES OF MERCHANTABILITY, NONINFRINGEMENT, OR FITNESS FOR A PARTICULAR PURPOSE. 
+
+11. LIMITATION OF LIABILITY.  IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DAMAGES WHATSOEVER (INCLUDING, WITHOUT LIMITATION, LOST PROFITS, BUSINESS INTERRUPTION, OR LOST INFORMATION) ARISING OUT OF THE USE OF OR INABILITY TO USE THE SOFTWARE, EVEN IF THE AUTHOR HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+12. ENTIRE AGREEMENT.  This is the entire agreement between you and the AUTHOR which supersedes any prior agreement or understanding, whether written or oral, relating to the subject matter of this license.
+
+13. RESERVED RIGHTS.  All rights not expressly granted here are reserved to the AUTHOR.
+
+14. USE. This software can be used free of charge for personal or commercial use.
+
+15. THIRD PARTY COMPONENTS. This software contain components developed by other authors and they are distributed under different licenses. For a complete list of the components and their licenses see the "credit.txt" file or visit the credit page http://andreaplanet.com/andreamosaic/license/credits.php or read the attached credits.txt file.

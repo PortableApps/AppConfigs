@@ -1,0 +1,9 @@
+The PhotoFiltre 7 programme is supplied 'as is'. The user runs PhotoFiltre 7 at his or her own risk without warranty or guarantee on the part of the author. The author is under no obligation to correct bugs or other insuffiencies in the programme.
+
+The author is not responsable for any damages suffered by the user resulting from the use or distribution of the programme.
+
+In the same way, the author is not responsable for any loss of revenue or profit , or of any loss of (records or) information, or for direct or indirect damage which which may occur from the use of the programme nor for the reason that the programme may be inoperable, and this nonobstant the fact that the author may have been advised of the possibility of such damage.
+
+PhotoFiltre 7 is supplied free of charge for private or educative use. Any commercial or professional use requires a registered copy of the programme.
+
+The use of the PhotoFiltre 7 programme implies the acceptance by the user of the terms of this license agreement.

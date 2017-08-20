@@ -1,0 +1,66 @@
+﻿AquaSnap End-User License Agreement (EULA)
+
+Important: Please read the following terms and conditions carefully before using this software. Use of the software indicates your acceptance of these terms and conditions. If you do not agree with the following, do not install, copy, or use the software and remove it from your storages.
+
+Terms and conditions
+
+This license agreement ("License Agreement") applies to AquaSnap Copyright © 2015 Nurgo Software. All rights reserved. Except where otherwise noted, all program data of the software AquaSnap are under the copyright of Nurgo Software.
+
+In this License Agreement, you, the purchaser of the license rights granted by this License Agreement, are referred to as "Licensee". Nurgo Software ("Licensor") grants you a non-exclusive, non-transferable license to use one copy of the associated computer program ("Software") subject to the terms and conditions of this License Agreement. The Software is licensed, not sold.
+
+Restrictions
+
+Licensee may not resell, rent, lease or distribute any components or files provided with the Software package.
+
+In no case may the license key be distributed. The licensee is to store the license keys and files supplied by the licensor in a safe place. The licensor is not responsible for lost license keys or files.
+
+The licensee is required to hold the license keys and files secure. The licensee will be held responsible for any unauthorized use of the license keys or files.
+
+The licensee agrees not to attempt to bypass the license mechanism or generate unauthorized license keys or files.
+
+Save to the extent expressly permitted by this License Agreement or mandatory provisions of law, Licensee shall not modify, reverse engineer, decompile or disassemble the Software or any part thereof.
+
+Licensee acknowledges that the Software cannot be guaranteed error-free and further acknowledges that with due consideration of the license fee and the nature of the Software it has not relied on errors being corrected should the Software prove defective.
+
+License grant
+
+The Licensor grants you the right to install and use a copy of the software, within the limits of the license restrictions (listed below), on a computer running a validly licensed copy of the operating system for which the software was designed. You may also make copies of the software as may be necessary for backup and archival purposes.
+
+Free License Restrictions
+
+The Free License version of AquaSnap is valid for a personal, non-commercial use only. You are not allowed to use it at work or in the context of a professional activity. Some features of the software are not available is this version.
+
+Standard License Restrictions
+
+The Standard License version of AquaSnap is valid for 1 computer only. The Standard License may be used in a personal or company environment. This computer may be used by more than 1 person, but only 1 person may use this license at a time.
+
+Site License Restrictions
+
+The Site License version of AquaSnap is valid for an unlimited number of computers at 1 physical location (site).
+
+Enterprise License Restrictions
+
+The Enterprise License version of AquaSnap is valid for an unlimited number of computers at an unlimited number of physical locations (sites) belonging to the purchasing company.
+
+Proprietary rights
+
+The Software is protected by copyright and other intellectual property laws and treaties. Save for the right to use as herein expressly granted, all rights in and to the Software are reserved by the Licensor or its proprietors. Licensee shall not remove or destroy any proprietary, trademark or copyright markings or notices placed upon or contained within the Software or any related materials or documentation. Licensee shall not, by reason of this License Agreement or the performance hereof, acquire rights of any kind in any trademark, trade name, logo or product designation under which the Software was or is marketed and Licensee shall not make any use of the same for any reason.
+
+Updates
+
+The features in the Software may change when upgrades are made. The Licensor tries to maintain backward compatibility but makes no guarantees to do so. Unless otherwise indicated, a valid license to use the registered version includes the right to install free version updates, patches, bug-fixes and major upgrades.
+
+Termination
+
+Licensor may terminate this License Agreement if Licensee breaches any of the terms and conditions. In the event of such termination and upon expiry of the license granted herein, Licensee will delete the Software from any files and data storage. All provisions of this License Agreement relating to disclaimer of warranties, limitations of liability, remedies, or damages, and Licensor’s proprietary rights shall survive termination.
+
+LIMITED WARRANTY
+
+IT IS EXPRESSLY UNDERSTOOD BY LICENSEE, THAT THE SOFTWARE IS PROVIDED "AS IS" WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, WHETHER ORAL OR WRITTEN (INCLUDING BUT NOT LIMITED TO THOSE RELATING TO NON-INFRINGEMENT, SATISFACTORY QUALITY, FITNESS FOR PURPOSE OR MERCHANTABILITY) TO THE FULLEST EXTENT ALLOWED UNDER APPLICABLE LAW.
+
+LIMITATION OF LIABILITY
+
+TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT WILL LICENSOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL OR EXEMPLARY DAMAGES ARISING OUT OF OR RELATED TO THIS AGREEMENT OR USE OF THE SOFTWARE, INCLUDING BUT NOT LIMITED TO LOST PROFITS, BUSINESS INTERRUPTION OR LOSS OF INFORMATION OR CORRUPTION OF DATABASES, EVEN IF LICENSOR HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES AND REGARDLESS OF WHETHER ANY ACTION OR CLAIM IS BASED ON WARRANTY, CONTRACT, TORT OR OTHERWISE. UNDER NO CIRCUMSTANCES SHALL LICENSOR’S TOTAL LIABILITY ARISING OUT OF OR RELATED TO THIS AGREEMENT EXCEED THE TOTAL AMOUNT PAID BY LICENSEE TO LICENSOR.
+
+Nurgo Software
+http://www.nurgo-software.com

@@ -1,0 +1,7 @@
+By downloading, installing, copying, using, or taking possession of this Software, you are agreeing to be bound by the terms of this Agreement:
+
+1. You may not reverse engineer, decompile, or disassemble the Software. You may not remove any proprietary notices, labels or marks on the program and accompanying documentation. This Software may not be resold or leased without the prior written consent of Vista Software.
+
+2. All title and copyrights in and to the Software (including but not limited to any images, photographs, animations, video, audio, music, and text incorporated into the Software), the accompanying printed materials, and any copies of the Software are owned by Vista Software. The Software is protected by copyright laws and international treaty provisions.
+
+3. The Software is provided AS IS and with all faults. Vista Software makes no representations or warranties of any kind concerning the quality, safety or suitability of the Software, either express or implied, including without limitation any implied warranties of merchantability, fitness for a particular purpose, or non-infringement. In no event will Vista Software be liable for any indirect, punitive, special, incidental or consequential damages however they may arise and even if Vista Software has been previously advised of the possibility of such damages.

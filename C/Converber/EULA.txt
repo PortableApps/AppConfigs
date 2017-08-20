@@ -1,0 +1,18 @@
+LICENSE AGREEMENT AND COPYRIGHT
+=========
+
+This is a legal agreement ("License Agreement") between you (either personal or corporate) and Xyntec Inc. ("Author") for the software product "Converber" ("Software"). BY COPYING OR USING THE SOFTWARE IN ANY KIND, YOU AGREE TO BE BOUND BY ALL OF THE TERMS AND CONDITIONS OF THIS LICENSE AND DISCLAIMER AGREEMENT.
+
+Converber is FREEWARE. You can freely use this software and distribute copies of the ORIGINAL DISTRIBUTION FILE as long as NO ALTERATIONS are made to the file and its contents and no charge is raised. Any other way of distributing this software is prohibited.
+
+This is not public domain software. The software is owned by the author and protected by copyright law.
+
+You may not modify, reverse engineer, decompile or disassemble the files of this software.
+
+The application and any related documentation is provided "as is" WITHOUT ANY WARRANTIES, either express or implied, including, but not limited to, implied warranties of fitness for a particular purpose. The entire risk arising out of use or performance of the software remains with you.
+
+In no event shall the author be liable for any damages whatsoever (including, without limitation, damages for loss of business profits, business interruption, loss of business information, or any other pecuniary loss) arising out of the use of or inability to use this software or documentation, even if the author has been advised of the possibility of such damages.
+
+Copyright (c) 2004-2011 Xyntec Inc.
+http://www.xyntec.com
+28 October 2004

@@ -1,0 +1,11 @@
+BYONDPortable License
+Base Application is freeware by DanTom
+Distributed in portable form by PortableApps.com with permission
+
+LEGAL NOTICE
+
+Copyright 1996-2012 BYOND.  All Rights Reserved.
+
+The BYOND software is free, and may be freely distributed, so long as it is distributed in its entirety and free of charge.  No parts of BYOND may be distributed individually, nor may extraneous parts be distributed with the package, without written permission from the authors (http://www.byond.com/support/).
+
+In no event shall BYOND be liable for any damages whatsoever arising out of or related to the usage of the software or information contained within or pertaining to BYOND.
