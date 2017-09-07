@@ -3,12 +3,6 @@ ${SegmentFile}
 ;Var AllowUnprivilegedConnections
 
 ;${SegmentInit}
-;    ${If} $Bits = 64
-;        ${SetEnvironmentVariablesPath} FullAppDir "$EXEDIR\App\ProcessHacker\x64"
-;    ${Else}
-;        ${SetEnvironmentVariablesPath} FullAppDir "$EXEDIR\App\ProcessHacker\x86"
-;    ${EndIf}
-	
 ;	${ReadUserConfig} $AllowUnprivilegedConnections AllowUnprivilegedConnections
 ;!macroend
 
