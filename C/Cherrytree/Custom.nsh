@@ -32,7 +32,7 @@ ${SegmentPost}
 	;Clean up the malfunctioning dbus process
 	${GetProcessPID} "dbus-daemon.exe" $0
 	${GetProcessPath} $0 $1
-	${If} $1 == "$EXEDIR\App\cherrytree\bin\dbus-daemon.exe"
+	${If} $1 == "$EXEDIR\App\CherryTree\bin\dbus-daemon.exe"
 		${TerminateProcess} $0 $2
 	${EndIf}
 !macroend

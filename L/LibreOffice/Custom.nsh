@@ -1,33 +1,14 @@
 ${SegmentFile}
 
+;=== START INTEGRITY CHECK 1.1 Var
+	Var bolCustomIntegrityCheckStartUnsupported
+	Var strCustomIntegrityCheckVersion
+;=== END INTEGRITY CHECK
+
 !include WinMessages.nsh
 
-${SegmentInit}
-	;Ensure we have a proper Documents path
-	ExpandEnvStrings $1 "%PortableApps.comDocuments%"
-	${If} $1 == ""
-	${OrIfNot} ${FileExists} "$1\*.*"
-		${GetParent} $EXEDIR $3
-		${GetParent} $3 $1
-		${If} $1 == "" ;Be sure we didn't just GetParent on Root
-			StrCpy $1 $3
-		${EndIf}
-		${If} ${FileExists} "$1\Documents\*.*"
-			StrCpy $2 "$1\Documents"
-		${Else}
-			${GetRoot} $EXEDIR $1
-			${If} ${FileExists} "$1\Documents\*.*"
-				StrCpy $2 "$1\Documents"
-			${Else}
-				StrCpy $2 "$1"
-			${EndIf}
-		${EndIf}
-		System::Call 'Kernel32::SetEnvironmentVariable(t, t) i("PortableApps.comDocuments", "$2").r0'
-	${EndIf}
-!macroend
-
-${SegmentPrePrimary}
-	;=== START INTEGRITY CHECK 1.0
+${Segment.OnInit}
+	;=== START INTEGRITY CHECK 1.1 OnInit
 	;Check for improper install/upgrade without running the PA.c Installer which can cause issues
 	;Designed to not require ReadINIStrWithDefault which is not included in the PA.c Launcher code
 	
@@ -66,10 +47,71 @@ ${SegmentPrePrimary}
 
 		${VersionCompare} $0 $1 $2
 		${If} $2 == 1		
-			MessageBox MB_OK|MB_ICONEXCLAMATION `Integrity Failure Warning: ${NamePortable} was installed or upgraded without using its installer and some critical files may have been modified.  This could cause data loss, personal data left behind on a shared PC, functionality issues, and/or may be a violation of the application's license. Please visit PortableApps.com to obtain the official release of this application to install or upgrade. If you wish to use this application in its current unsupported state, please click OK to continue.`
-			WriteINIStr "$EXEDIR\Data\settings\${AppID}Settings.ini" "${AppID}Settings" "InvalidPackageWarningShown" $0
+			MessageBox MB_YESNO|MB_ICONQUESTION|MB_DEFBUTTON2 `Integrity Failure Warning: ${NamePortable} was installed or upgraded without using its installer and some critical files may have been modified.  This could cause data loss, personal data left behind on a shared PC, functionality issues, and/or may be a violation of the application's license. Neither the application publisher nor PortableApps.com will be responsible for any issues you encounter.$\r$\n$\r$\nWould you like to start ${NamePortable} in its current unsupported state?` IDYES CustomIntegrityCheckGotoStartAnyway IDNO CustomIntegrityCheckGotoDownloadQuestion
+		
+			CustomIntegrityCheckGotoDownloadQuestion:
+			;Check to ensure we have a valid homepage before asking the user
+			StrCpy $R0 ""
+			${If} ${FileExists} "$EXEDIR\App\AppInfo\appinfo.ini"
+				ReadINIStr $R0 "$EXEDIR\App\AppInfo\appinfo.ini" "Details" "Homepage"
+			${EndIf}
+			
+			${If} $R0 == ""
+				Abort
+			${Else}
+				StrCpy $R1 $R0 4
+				${If} $R1 != "http"
+				${AndIf} $R1 != "HTTP"
+					StrCpy $R0 "http://$R0"
+				${EndIf}
+			${EndIf}
+			
+			MessageBox MB_YESNO|MB_ICONQUESTION|MB_DEFBUTTON1 `Would you like to visit the ${NamePortable} homepage to download the app and upgrade your current install?` IDYES CustomIntegrityCheckGotoURL IDNO CustomIntegrityCheckGotoAbort
+
+			CustomIntegrityCheckGotoURL:		
+			ExecShell "open" $R0
+			Abort
+						
+			CustomIntegrityCheckGotoAbort:
+			Abort
+	
+			CustomIntegrityCheckGotoStartAnyway:
+			StrCpy $bolCustomIntegrityCheckStartUnsupported true
+			StrCpy $strCustomIntegrityCheckVersion $0
 		${EndIf}
 	${EndIf}
+	;=== END INTEGRITY CHECK
+!macroend
+
+${SegmentInit}
+	;Ensure we have a proper Documents path
+	ExpandEnvStrings $1 "%PortableApps.comDocuments%"
+	${If} $1 == ""
+	${OrIfNot} ${FileExists} "$1\*.*"
+		${GetParent} $EXEDIR $3
+		${GetParent} $3 $1
+		${If} $1 == "" ;Be sure we didn't just GetParent on Root
+			StrCpy $1 $3
+		${EndIf}
+		${If} ${FileExists} "$1\Documents\*.*"
+			StrCpy $2 "$1\Documents"
+		${Else}
+			${GetRoot} $EXEDIR $1
+			${If} ${FileExists} "$1\Documents\*.*"
+				StrCpy $2 "$1\Documents"
+			${Else}
+				StrCpy $2 "$1"
+			${EndIf}
+		${EndIf}
+		System::Call 'Kernel32::SetEnvironmentVariable(t, t) i("PortableApps.comDocuments", "$2").r0'
+	${EndIf}
+!macroend
+
+${SegmentPrePrimary}
+	;=== START INTEGRITY CHECK 1.1 PrePrimary
+	${If} $bolCustomIntegrityCheckStartUnsupported == true
+		WriteINIStr "$EXEDIR\Data\settings\${AppID}Settings.ini" "${AppID}Settings" "InvalidPackageWarningShown" $strCustomIntegrityCheckVersion
+	${EndIf}	
 	;=== END INTEGRITY CHECK
 
 	;Load app ttf fonts
