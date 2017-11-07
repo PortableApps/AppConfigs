@@ -29,9 +29,3 @@
 		${EndIf}
 	${EndIf}
 !macroend
-
-
-!macro CustomCodePostInstall
-	;Integrity
-	WriteINIStr "$INSTDIR\App\AppInfo\appinfo.ini" "PortableApps.comInstaller" "InstallIntegrityCheck" "true"
-!macroend
