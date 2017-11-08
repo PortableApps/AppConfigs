@@ -10,7 +10,7 @@ YOU AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE AGREEMENT AND THE LIMITATIONS
 
 Revo Uninstaller Portable is FREEWARE. You can freely use this software and distribute copies of the ORIGINAL DISTRIBUTION FILE as long as NO ALTERATIONS are made to the file and its contents, no charge is raised and that this license agreement is not violated in any ways. Any other way of distributing this software is prohibited.
 
-This is not public domain software. The software is owned by the author and protected by copyright law. The Software is licensed, not sold, to You for Your use only under the terms of this Agreement, and VS Revo Group Ltd. reserves all rights not expressly granted to You. 
+This is not public domain software. The software is owned by the author and protected by copyright law. The Software is licensed, not sold, to You for Your use only under the terms of this Agreement, and VS Revo Group Ltd. reserves all rights not expressly granted to You.
 
 You are NOT allowed to:
 
@@ -28,7 +28,7 @@ THE APPLICATION AND ANY RELATED DOCUMENTATION IS PROVIDED "AS IS" WITHOUT ANY WA
 The Agreement becomes effective when You agree to the terms and conditions of this Agreement by opening, installing, using, accessing or manipulating the Software (the " Effective Date "), and this Agreement  will terminate immediately upon notice to You if You materially breach any term or condition of this Agreement. You agree upon termination to promptly destroy the Software and all copies thereof.
 
 
-NOTE: REVO UNINSTALLER PORTABLE MAY CONNECT BY USER’S REQUEST THROUGH THE INTERNET TO WWW.REVOUNINSTALLER.COM TO CHECK FOR UPDATES. DURING THIS PROCESS IT WILL DOWNLOAD A SMALL FILE THAT CONTAINS THE NUMBER OF THE LATEST VERSION AVAILABLE ON THE INTERNET TO CHECK IF THE VERSION AVAILABLE ON THE INTERNET IS NEWER THAN THE VERSION INSTALLED ON THE USER'S COMPUTER. REVO UNINSTALLER PORTABLE WILL NOT SEND ANY DATA FROM THE USER'S COMPUTER. YOU CAN DISABLE THIS FEATURE FROM THE SETTINGS SCREEN.
+NOTE: REVO UNINSTALLER PORTABLE MAY CONNECT BY USERï¿½S REQUEST THROUGH THE INTERNET TO WWW.REVOUNINSTALLER.COM TO CHECK FOR UPDATES. DURING THIS PROCESS IT WILL DOWNLOAD A SMALL FILE THAT CONTAINS THE NUMBER OF THE LATEST VERSION AVAILABLE ON THE INTERNET TO CHECK IF THE VERSION AVAILABLE ON THE INTERNET IS NEWER THAN THE VERSION INSTALLED ON THE USER'S COMPUTER. REVO UNINSTALLER PORTABLE WILL NOT SEND ANY DATA FROM THE USER'S COMPUTER. YOU CAN DISABLE THIS FEATURE FROM THE SETTINGS SCREEN.
 
 Copyright VS Revo Group Ltd. All rights reserved.
 http://www.vsrevogroup.com
