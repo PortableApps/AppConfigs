@@ -1,0 +1,59 @@
+﻿Daum PotPlayer End User License Agreement
+
+Please read the following agreement carefully before installing and using Daum PotPlayer ("Software"). This Daum PotPlayer End User License Agreement ("EULA" or "Agreement") is a binding agreement between licensee businesses and individual users such as you (the "User" or "Users") and Daum Communications Corp. ("Daum") regarding the Software. The Software includes online services using wired and wireless networks and software products included in the services and all combinations of the alpha and beta release, freeware and pay versions of such products.
+
+This Software is a freeware product developed for Daum members, software suppliers and licensed service providers and their users. Users may freely install and use the Software at home, the work place, internet cafés, school, government office, etc. and use the Software for the purpose of viewing media files on the User's computer (this Software is not subject to software copyright infringement actions).
+
+By clicking on the "I Agree" button or installing, copying or otherwise using the Software, you will be deemed to have agreed to be bound by the terms of this Agreement. If you do not agree to the terms of this Agreement, click the "Cancel" button or do not install this Software on your computer.
+
+By using this Software, you will be deemed to have read, understood, and agreed to, the terms of this EULA.
+
+Article 1 (Statement, Effect and Amendment of the Agreement)
+(1) This Agreement will be made available for the User to read during the installation of the Software and will become effective when the User agrees to the terms of this Agreement.
+(2) If Daum deems it necessary, Daum may amend this Agreement. In the event Daum amends this Agreement, Daum will post the then-current EULA, the amended EULA ("Amended EULA") and its effective date and reasons for amendment on the relevant screen at least seven (7) days prior to the effective date of the Amended EULA and until such effective date.
+(3) Users are entitled not to agree to the Amended EULA. A User may give notice of its intent to not agree to the Amended EULA to Daum within fifteen (15) days after notice of the Amended EULA has been given. If a User does not agree to the Amended EULA, Daum may terminate the Agreement with such User. However, if a User does not give notice of its intent to not agree to the Amended EULA to Daum within fifteen (15) days after notice of the Amended EULA has been given, such User will be deemed to have agreed to and accepted the terms of the Amended EULA.
+
+Article 2 (Obligations of Daum)
+(1) Daum grants Users with the right to install and use the Software for free.
+(2) To provide consistent and stable services, in the case of any technical errors in its equipment or the Software or losses thereto Daum will repair or restore such equipment or the Software without delay unless there exists unavoidable circumstances.
+(3) If Daum objectively considers any suggestion or complaint submitted by a User to be reasonable, Daum will immediately handle such suggestion or complaint pursuant to appropriate procedures. However, where it is difficult for Daum to immediately handle such suggestion or complaint, Daum will notify the Users of the reason for such delay and the expected time line for handling the suggestion or complaint.
+(4) If there are any updates for the Software ("Software Update"), Daum will immediately provide the Software Update to the Users. However, certain functions of the Software that have already been provided to the Users may not be available depending upon the update status.
+(5) Daum operates a security system for the protection of Users' personal information and publicly announces and complies with its Privacy Policy.
+
+Article 3 (Obligations of Users)
+(1) Users may not modify, reverse engineer, decompile or disassemble the Software.
+(2) Users may not lease or sell the Software for commercial purposes and may not use the Software to provide commercial services.
+(3) Users must not infringe the intellectual property rights of others through the use of the Software.
+(4) Users must comply with this Agreement and any applicable laws and regulations and must refrain from engaging in any illegal conduct or any conduct that may interfere with the business of Daum.
+(5) Daum will not be responsible for any losses, damages or liabilities that may be incurred by the conduct of Users as stated above.
+
+Article 4 (Copyright in the Software)
+(1) Ownership of, and copyrights in and to, the Software and relevant documents will belong to Daum.
+(2) The Software, its source technology and relevant documents are protected in accordance with international copyright laws and conventions.
+(3) Users do not have ownership over the Software and are only granted the right to use the Software.
+
+Article 5 (Collection and Use of Data and Other Information)
+(1) Daum may collect and use data from the computer of Users as a part of its product support services that are provided to Users in connection with the Software. Data that may be collected solely include the type of computer and type of operating system used on the computer, memory capacity, type of graphic card, Directx version, media player version, type of webcam and TV reception card.
+(2) Daum will use the above collected data only for the purpose of improving the Software or providing service or technology that is suitable to the user environment of the User and will not use such data for any other purposes.
+
+Article 6 (Agreement to the Use of Data Transfer Technology)
+For the proper transfer of data streaming, Daum may use a technology that relay transfers data between Users in its services. You hereby agree that you may relay transfer steaming data to another User and agree to the receipt of relay transfer of streaming data to another user, through a network device installed on the User's computer.
+
+Article 7 (Limitation of Liability)
+(1) Daum does not guarantee that the data and other information that are provided through the Software are accurate or will be in compliance with applicable copyright laws except for data and information that are directly created or prepared by Daum.
+(2) Daum is not responsible for any losses or damage incurred by Users due to the installation, use or non-use of the Software except where such losses or damages are caused by the willful misconduct or gross negligence of Daum.
+(3) Daum is not responsible for any loss of actual or anticipated profits of Users from their use of the Software.
+(4) Daum is not responsible for, and will not be obligated to be involved in, any disputes that arise between Users and between a User and a third party in connection with their use of the Software.
+
+Article 8 (Termination and Damages)
+(1) If a User fails to comply with this Agreement, Daum may terminate this Agreement with the User. Upon such termination, the User must uninstall and delete all copies of the Software and its components from his/her computer.
+(2) Users may, at any time, terminate this Agreement by uninstalling and deleting the Software from his/her computer.
+(3) If Daum incurs any damages due to a User or as a result of a User's failure to comply with this Agreement as set forth in Section 1 above, Daum may file a claim for damages against such User. Further, any costs or penalties that have been incurred or imposed as a result of the inappropriate use of the Software by a User prior to the termination of this Agreement with such User will survive the termination of this Agreement and remain outstanding and payable to Daum.
+
+Article 9 (Additional Rules)
+Any matter that is not stipulated in this Agreement will be governed by applicable law and regulation.
+
+Article 10 (Dispute Resolution)
+All disputes or claims arising out of or relating to this Agreement or the use of the Software shall be exclusively submitted to the court having jurisdiction over the matter in accordance with the Korean Civil Procedure Act.
+
+This Agreement shall take effect as of April 9, 2007.
