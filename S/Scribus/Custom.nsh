@@ -63,6 +63,29 @@ ${Segment.OnInit}
 	${SetEnvironmentVariable} CustomBits $0
 !macroend
 
+${SegmentInit}
+	ExpandEnvStrings $1 "%PortableApps.comDocuments%"
+	${If} $1 == ""
+	${OrIfNot} ${FileExists} "$1\*.*"
+		${GetParent} $EXEDIR $3
+		${GetParent} $3 $1
+		${If} $1 == "" ;Be sure we didn't just GetParent on Root
+			StrCpy $1 $3
+		${EndIf}
+		${If} ${FileExists} "$1\Documents\*.*"
+			StrCpy $2 "$1\Documents"
+		${Else}
+			${GetRoot} $EXEDIR $1
+			${If} ${FileExists} "$1\Documents\*.*"
+				StrCpy $2 "$1\Documents"
+			${Else}
+				StrCpy $2 "$1"
+			${EndIf}
+		${EndIf}
+		System::Call 'Kernel32::SetEnvironmentVariable(t, t) i("PortableApps.comDocuments", "$2").r0'
+	${EndIf}
+!macroend
+
 ${SegmentPre}	
 	; If [Activate]:Ghostscript=find|require, search for Ghostscript in the
 	; following locations (in order):
@@ -121,4 +144,31 @@ ${SegmentPost}
 	${AndIf} ${RegistryKeyExists} "HKCU\Software\GPL Ghostscript"
 		${registry::DeleteKey} "HKCU\Software\GPL Ghostscript" $R9
 	${EndIf}
+!macroend
+
+${SegmentPostPrimary}
+	; Copied in and modified from PAL for Qt 5.0 - now using QtProject vs. Trolltech
+	;
+	; The Qt plugin cache and a few other things leave keys inside
+	; HKCU\Software\QtProject\OrganizationDefaults\*\X:\...\dirname which need
+	; to be cleared up. They're useless, they've got just values like foo.dll
+	; with a version number in them, but they need removing. Due to the
+	; directory-recursive key nature of them, we can just scrap the package
+	; directory for each and then prune the tree as far up as it's empty.
+	StrCpy $R0 1
+	${Do}
+		ClearErrors
+		${ReadLauncherConfig} $0 QtKeysCleanup $R0
+		${IfThen} ${Errors} ${|} ${ExitDo} ${|}
+		StrCpy $1 Software\QtProject\OrganizationDefaults\$0\$AppDirectory
+		DeleteRegKey HKCU $1
+		${Do}
+			${GetParent} $1 $1
+			DeleteRegKey /ifempty HKCU $1
+		${LoopUntil} $1 == "Software\QtProject"
+
+		IntOp $R0 $R0 + 1
+	${Loop}
+	; We don't need to set $UsesRegistry to true, the registry plug-in hasn't
+	; been used and unloading it is what UsesRegistry is for.
 !macroend
