@@ -7,6 +7,17 @@ Var InstallerCustomJavaPluginDisabled
 !macroend
 
 !macro CustomCodePostInstall
+	Rename "$INSTDIR\jre1.8.0_171\bin" "$INSTDIR\bin"
+	Rename "$INSTDIR\jre1.8.0_171\lib" "$INSTDIR\lib"
+	Rename "$INSTDIR\jre1.8.0_171\COPYRIGHT" "$INSTDIR\COPYRIGHT"
+	Rename "$INSTDIR\jre1.8.0_171\LICENSE" "$INSTDIR\LICENSE"
+	Rename "$INSTDIR\jre1.8.0_171\README.txt" "$INSTDIR\README.txt"
+	Rename "$INSTDIR\jre1.8.0_171\release" "$INSTDIR\release"
+	Rename "$INSTDIR\jre1.8.0_171\THIRDPARTYLICENSEREADME.txt" "$INSTDIR\THIRDPARTYLICENSEREADME.txt"
+	Rename "$INSTDIR\jre1.8.0_171\THIRDPARTYLICENSEREADME-JAVAFX.txt" "$INSTDIR\THIRDPARTYLICENSEREADME-JAVAFX.txt"
+	Rename "$INSTDIR\jre1.8.0_171\Welcome.html" "$INSTDIR\Welcome.html"
+	RMDir "$INSTDIR\jre1.8.0_171"
+	nsExec::ExecToLog `"$INSTDIR\Other\Source\UnpackPostInstall.bat"`
 	;ExecDOS::exec '"$INSTDIR\bin\unpack200.exe" -r -q "$INSTDIR\lib\charsets.pack" "$INSTDIR\lib\charsets.jar"' "" ""
 	;Pop $R0
 	;ExecDOS::exec '"$INSTDIR\bin\unpack200.exe" -r -q "$INSTDIR\lib\deploy.pack" "$INSTDIR\lib\deploy.jar"' "" ""
