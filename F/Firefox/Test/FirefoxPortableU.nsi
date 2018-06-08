@@ -1,4 +1,4 @@
-﻿;Copyright 2004-2017 John T. Haller of PortableApps.com
+﻿;Copyright 2004-2018 John T. Haller of PortableApps.com
 
 ;Website: http://PortableApps.com/FirefoxPortable
 
@@ -26,7 +26,7 @@
 !define APPNAME "Firefox"
 !define NAME "FirefoxPortable"
 !define AppID "FirefoxPortable"
-!define VER "2.0.6.0"
+!define VER "2.1.2.0"
 !define WEBSITE "PortableApps.com/FirefoxPortable"
 !define DEFAULTEXE "firefox.exe"
 !define DEFAULTAPPDIR "firefox"
@@ -520,6 +520,11 @@ Section "Main"
 			${WordReplace} $1 "\" "/" "+" $3
 			${ReplaceInFile} "$PROFILEDIRECTORY\prefs.js" "file:///$2" "file:///$3"
 		${EndIf}
+		${If} ${FileExists} "$PROFILEDIRECTORY\extensions.json"
+			${WordReplace} $0 "\" "\\" "+" $2
+			${WordReplace} $1 "\" "\\" "+" $3
+			${ReplaceInFile} "$PROFILEDIRECTORY\extensions.json" "$2" "$3"
+		${EndIf}
 		${GetParent} $LASTPROFILEDIRECTORY $0
 		${GetParent} $0 $0
 		${GetParent} $0 $0
@@ -531,6 +536,11 @@ Section "Main"
 		StrCmp $0 $1 RunProgram
 		${If} ${FileExists} "$PROFILEDIRECTORY\mimeTypes.rdf"
 			${ReplaceInFile} "$PROFILEDIRECTORY\mimeTypes.rdf" $0 $1
+		${EndIf}
+		${If} ${FileExists} "$PROFILEDIRECTORY\extensions.json"
+			${WordReplace} $0 "\" "\\" "+" $2
+			${WordReplace} $1 "\" "\\" "+" $3
+			${ReplaceInFile} "$PROFILEDIRECTORY\extensions.json" "$2" "$3"
 		${EndIf}
 
 	RunProgram:
@@ -646,6 +656,10 @@ Section "Main"
 		FindProcDLL::WaitProcEnd "firefox.exe" -1
 		Sleep 2000
 		FindProcDLL::FindProc "firefox.exe"                  
+		StrCmp $R0 "1" CheckRunning
+		FindProcDLL::FindProc "$PROGRAMDIRECTORY\updater.exe"                  
+		StrCmp $R0 "1" CheckRunning
+		FindProcDLL::FindProc "$PROGRAMDIRECTORY64\updater.exe"                  
 		StrCmp $R0 "1" CheckRunning CleanupRunLocally
 	
 	StartProgramAndExit:
@@ -682,12 +696,33 @@ Section "Main"
 		RMDir "$APPDATA\Mozilla\Firefox\Profiles\" ;=== Will only delete if empty (no /r switch)
 		RMDir "$APPDATA\Mozilla\Firefox\Profile\" ;=== Will only delete if empty (no /r switch)
 		RMDir "$APPDATA\Mozilla\Firefox\" ;=== Will only delete if empty (no /r switch)
-		RMDir "$APPDATA\Mozilla\" ;=== Will only delete if empty (no /r switch)
+		RMDir "$APPDATA\Mozilla\SystemExtensionsDev\" ;=== Will only delete if empty (no /r switch)
+		RMDir "$APPDATA\Mozilla\" ;=== Will only delete if empty (no /r switch)	
 		RMDir "$LOCALAPPDATA\Mozilla\Firefox\firefox\updates\0" ;=== Will only delete if empty (no /r switch)
 		RMDir "$LOCALAPPDATA\Mozilla\Firefox\firefox\updates" ;=== Will only delete if empty (no /r switch)
 		RMDir "$LOCALAPPDATA\Mozilla\Firefox\firefox" ;=== Will only delete if empty (no /r switch)
 		RMDir "$LOCALAPPDATA\Mozilla\Firefox\" ;=== Will only delete if empty (no /r switch)
+
+		;Remove empty directories left due to a Firefox updater bug
+		${If} ${FileExists} "$LOCALAPPDATA\Mozilla\updates\*.*"	
+			FindFirst $0 $1 "$LOCALAPPDATA\Mozilla\updates\*.*"
+			RemoveLocalFiles3Loop:
+				StrCmp $1 "" RemoveLocalFiles3LoopDone
+				${If} ${FileExists} "$LOCALAPPDATA\Mozilla\updates\$1\*.*"
+				${AndIf} $1 != "."
+				${AndIf} $1 != ".."
+					RMDir "$LOCALAPPDATA\Mozilla\updates\$1"
+				${EndIf}
+				FindNext $0 $1
+				Goto RemoveLocalFiles3Loop
+			RemoveLocalFiles3LoopDone:
+			FindClose $0
+		${EndIf}
+		
+		RMDir "$LOCALAPPDATA\Mozilla\updates" ;=== Will only delete if empty (no /r switch)
 		RMDir "$LOCALAPPDATA\Mozilla\" ;=== Will only delete if empty (no /r switch)
+		RMDir "$LOCALAPPDATALow\Mozilla\" ;=== Will only delete if empty (no /r switch)
+
 		StrCmp $MOZILLAORGKEYEXISTS "true" RemoveMachineRegistryKey
 			${registry::DeleteKey} "HKEY_CURRENT_USER\Software\mozilla.org" $R0
 		RemoveMachineRegistryKey:
