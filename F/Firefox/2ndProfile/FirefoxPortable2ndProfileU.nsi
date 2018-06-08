@@ -1,4 +1,4 @@
-﻿;Copyright 2010-2017 John T. Haller of PortableApps.com
+﻿;Copyright 2010-2018 John T. Haller of PortableApps.com
 
 ;Website: http://PortableApps.com/FirefoxPortable
 
@@ -22,7 +22,7 @@
 !define PORTABLEAPPNAME "Mozilla Firefox, Portable Edition 2nd Profile"
 !define APPNAME "Firefox"
 !define NAME "FirefoxPortable2ndProfile"
-!define VER "2.0.0.0"
+!define VER "2.0.1.0"
 !define WEBSITE "PortableApps.com/FirefoxPortable"
 !define DEFAULTEXE "firefox.exe"
 !define DEFAULTAPPDIR "firefox"
