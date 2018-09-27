@@ -1,10 +1,11 @@
 ﻿AquaSnap End-User License Agreement (EULA)
 
+
 Important: Please read the following terms and conditions carefully before using this software. Use of the software indicates your acceptance of these terms and conditions. If you do not agree with the following, do not install, copy, or use the software and remove it from your storages.
 
 Terms and conditions
 
-This license agreement ("License Agreement") applies to AquaSnap Copyright © 2015 Nurgo Software. All rights reserved. Except where otherwise noted, all program data of the software AquaSnap are under the copyright of Nurgo Software.
+This license agreement ("License Agreement") applies to AquaSnap Copyright © 2018 Nurgo Software. All rights reserved. Except where otherwise noted, all program data of the software AquaSnap are under the copyright of Nurgo Software.
 
 In this License Agreement, you, the purchaser of the license rights granted by this License Agreement, are referred to as "Licensee". Nurgo Software ("Licensor") grants you a non-exclusive, non-transferable license to use one copy of the associated computer program ("Software") subject to the terms and conditions of this License Agreement. The Software is licensed, not sold.
 
@@ -33,6 +34,10 @@ The Free License version of AquaSnap is valid for a personal, non-commercial use
 Standard License Restrictions
 
 The Standard License version of AquaSnap is valid for 1 computer only. The Standard License may be used in a personal or company environment. This computer may be used by more than 1 person, but only 1 person may use this license at a time.
+
+Personal License Restrictions
+
+The Personal License version of AquaSnap is only valid for personal use. It can be used on several computers but can only be used by the licensee. The Personal License version can be used on a single company computer, if the licensee is the only user of the company computer. The licensee must remove the license when returning the computer to the company.
 
 Site License Restrictions
 
