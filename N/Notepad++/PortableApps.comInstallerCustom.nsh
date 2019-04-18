@@ -21,6 +21,10 @@ Var bolInstallerCustomHandleTidy
 		Delete "$INSTDIR\App\Notepad++\plugins\tidy"
 		StrCpy $bolInstallerCustomHandleTidy true
 	${EndIf}
+	${If} ${FileExists} "$INSTDIR\App\Notepad++\themes\*.*"
+	${AndIfNot} ${FileExists} "$INSTDIR\Data\themes\*.*"
+		Rename "$INSTDIR\App\Notepad++\themes" "$INSTDIR\Data\themes"
+	${EndIf}
 !macroend
 
 !macro CustomCodePostInstall
@@ -34,5 +38,14 @@ Var bolInstallerCustomHandleTidy
 			CreateDirectory "$INSTDIR\Data\Config\plugins\Config\Hunspell"
 			CopyFiles /SILENT "$INSTDIR\App\DefaultData\Config\plugins\Config\Hunspell\*.*" "$INSTDIR\Data\Config\plugins\Config\Hunspell"
 		${EndIf}
+		${If} ${FileExists} "$INSTDIR\App\DefaultData\Config\plugins\Config\nppPluginList.dll"
+			Delete "$INSTDIR\Data\Config\plugins\Config\nppPluginList.dll"
+			CopyFiles /SILENT "$INSTDIR\App\DefaultData\Config\plugins\Config\nppPluginList.dll" "$INSTDIR\Data\Config\plugins\Config"
+		${EndIf}
+	${EndIf}
+	${If} ${FileExists} "$INSTDIR\Data\Config\*.*"
+	${AndIfNot} ${FileExists} "$INSTDIR\Data\themes\*.*"
+		CreateDirectory "$INSTDIR\Data\themes"
+		CopyFiles /SILENT "$INSTDIR\App\DefaultData\themes\*.*" "$INSTDIR\Data\themes"
 	${EndIf}
 !macroend
