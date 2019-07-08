@@ -1,7 +1,8 @@
 ${SegmentFile}
 
 ${SegmentInit}
-	Delete "$EXEDIR\App\GnuCash\share\guile\1.8\slibcat"
+	Delete "$EXEDIR\App\GnuCash\share\guile\2.0\slibcat"
+	Delete "$EXEDIR\App\GnuCash\share\guile\2.2\slibcat"
 !macroend
 
 ${SegmentPre}
