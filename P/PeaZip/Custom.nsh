@@ -46,6 +46,10 @@ ${SegmentInit}
 			Rename "$EXEDIR\App\PeaZip\res\zpaq\zpaq.exe" "$EXEDIR\App\PeaZip\res\zpaq\zpaq32.exe"
 			Rename "$EXEDIR\App\PeaZip\res\zpaq\zpaq64.exe" "$EXEDIR\App\PeaZip\res\zpaq\zpaq.exe"
 		${EndIf}
+		${If} ${FileExists} "$EXEDIR\App\PeaZip\res\zstd\zstd64.exe"
+			Rename "$EXEDIR\App\PeaZip\res\zstd\zstd.exe" "$EXEDIR\App\PeaZip\res\zstd\zstd32.exe"
+			Rename "$EXEDIR\App\PeaZip\res\zstd\zstd64.exe" "$EXEDIR\App\PeaZip\res\zstd\zstd.exe"
+		${EndIf}
 	${Else}
 		${If} ${FileExists} "$EXEDIR\App\PeaZip\peazip32.exe"
 			Rename "$EXEDIR\App\PeaZip\peazip.exe" "$EXEDIR\App\PeaZip\peazip64.exe"
@@ -90,6 +94,10 @@ ${SegmentInit}
 		${If} ${FileExists} "$EXEDIR\App\PeaZip\res\zpaq\zpaq32.exe"
 			Rename "$EXEDIR\App\PeaZip\res\zpaq\zpaq.exe" "$EXEDIR\App\PeaZip\res\zpaq\zpaq64.exe"
 			Rename "$EXEDIR\App\PeaZip\res\zpaq\zpaq32.exe" "$EXEDIR\App\PeaZip\res\zpaq\zpaq.exe"
+		${EndIf}
+		${If} ${FileExists} "$EXEDIR\App\PeaZip\res\zstd\zstd32.exe"
+			Rename "$EXEDIR\App\PeaZip\res\zstd\zstd.exe" "$EXEDIR\App\PeaZip\res\zstd\zstd64.exe"
+			Rename "$EXEDIR\App\PeaZip\res\zstd\zstd32.exe" "$EXEDIR\App\PeaZip\res\zstd\zstd.exe"
 		${EndIf}
     ${EndIf}
 !macroend
