@@ -1,4 +1,4 @@
-﻿;Copyright 2004-2017 John T. Haller of PortableApps.com
+﻿;Copyright 2004-2020 John T. Haller of PortableApps.com
 
 ;Website: http://PortableApps.com/ThunderbirdPortable
 
@@ -19,12 +19,14 @@
 ;along with this program; if not, write to the Free Software
 ;Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
+!define PF_XMMI64_INSTRUCTIONS_AVAILABLE 10
+
 !define PORTABLEAPPNAME "Mozilla Thunderbird, Portable Edition"
 !define NamePortable "Mozilla Thunderbird, Portable Edition"
 !define APPNAME "Thunderbird"
 !define NAME "ThunderbirdPortable"
 !define AppID "ThunderbirdPortable"
-!define VER "1.9.3.0"
+!define VER "2.3.0.0"
 !define WEBSITE "PortableApps.com/ThunderbirdPortable"
 !define DEFAULTEXE "thunderbird.exe"
 !define DEFAULTAPPDIR "thunderbird"
@@ -69,11 +71,13 @@ SetDatablockOptimize On
 
 ;=== Include
 ;(Standard NSIS)
+!include FileFunc.nsh
+!insertmacro GetParameters
 !include LogicLib.nsh
 !include Registry.nsh
 !include TextFunc.nsh
 !insertmacro GetParent
-!insertmacro GetParameters
+!include WinVer.nsh
 !include WordFunc.nsh
 !insertmacro VersionCompare
 !insertmacro WordReplace
@@ -83,8 +87,10 @@ SetDatablockOptimize On
 
 ;(Custom)
 !include CheckForPlatformSplashDisable.nsh
+!include ProcFunc.nsh
 !include ReplaceInFileWithTextReplace.nsh
 !include ReadINIStrWithDefault.nsh
+!include RMDirIfNotJunction.nsh
 !include SetFileAttributesDirectoryNormal.nsh
 
 
@@ -97,6 +103,7 @@ LoadLanguageFile "${NSISDIR}\Contrib\Language files\${LAUNCHERLANGUAGE}.nlf"
 
 ;=== Variables
 Var PROGRAMDIRECTORY
+Var PROGRAMDIRECTORY64
 Var PROFILEDIRECTORY
 Var ORIGINALPROFILEDIRECTORY
 Var SETTINGSDIRECTORY
@@ -120,6 +127,9 @@ Var MISSINGFILEORPATH
 Var NOUNREADMAILKEY
 Var strOriginalTempPath
 Var bolLauncherIsAlreadyRunning
+Var bolAlwaysUse32Bit
+Var bolUsing64Bit
+Var strPassedParameters
 ;=== START INTEGRITY CHECK 1.1 Var
 Var bolCustomIntegrityCheckStartUnsupported
 Var strCustomIntegrityCheckVersion
@@ -218,6 +228,7 @@ Section "Main"
 		;=== Read the parameters from the INI file
 		${ReadINIStrWithDefault} $0 "$EXEDIR\${NAME}.ini" "${NAME}" "${APPNAME}Directory" "App\${DEFAULTAPPDIR}"
 		StrCpy $PROGRAMDIRECTORY "$EXEDIR\$0"
+		StrCpy $PROGRAMDIRECTORY64 "$EXEDIR\$064"
 		${ReadINIStrWithDefault} $0 "$EXEDIR\${NAME}.ini" "${NAME}" "ProfileDirectory" "Data\profile"
 		StrCpy $PROFILEDIRECTORY "$EXEDIR\$0"
 		${ReadINIStrWithDefault} $0 "$EXEDIR\${NAME}.ini" "${NAME}" "SettingsDirectory" "Data\settings"
@@ -238,10 +249,18 @@ Section "Main"
 		${ReadINIStrWithDefault} $DISABLESPLASHSCREEN "$EXEDIR\${NAME}.ini" "${NAME}" "DisableSplashScreen" "false"
 		${ReadINIStrWithDefault} $DISABLEINTELLIGENTSTART "$EXEDIR\${NAME}.ini" "${NAME}" "DisableIntelligentStart" "false"
 		${ReadINIStrWithDefault} $RUNLOCALLY "$EXEDIR\${NAME}.ini" "${NAME}" "RunLocally" "false"
-		StrCmp $RUNLOCALLY "true" "" CheckForDefault
+		${If} $RUNLOCALLY == "true"
 			StrCpy $WAITFORPROGRAM "true"
+		${EndIf}
+			
+		${ReadINIStrWithDefault} $bolAlwaysUse32Bit "$EXEDIR\${NAME}.ini" "${NAME}" "AlwaysUse32Bit" "false"
+		${If} $bolAlwaysUse32Bit == "true"
+			StrCpy $bolAlwaysUse32Bit true
+		${Else}
+			StrCpy $bolAlwaysUse32Bit false
+		${EndIf}
 		
-		CheckForDefault:
+		;CheckForDefault:
 			;=== Check if default directories
 			StrCmp $PROGRAMDIRECTORY "$EXEDIR\App\${DEFAULTAPPDIR}" "" EndINI
 			StrCmp $PROFILEDIRECTORY "$EXEDIR\Data\profile" "" EndINI
@@ -266,12 +285,14 @@ Section "Main"
 
 		IfFileExists "$EXEDIR\App\${DEFAULTAPPDIR}\${DEFAULTEXE}" "" NoProgramEXE
 			StrCpy $PROGRAMDIRECTORY "$EXEDIR\App\${DEFAULTAPPDIR}"
+			StrCpy $PROGRAMDIRECTORY64 "$EXEDIR\App\${DEFAULTAPPDIR}64"
 			StrCpy $PROFILEDIRECTORY "$EXEDIR\Data\profile"
 			StrCpy $PLUGINSDIRECTORY "$EXEDIR\Data\plugins"
 			StrCpy $SETTINGSDIRECTORY "$EXEDIR\Data\settings"
 			StrCpy $GPGPATHDIRECTORY "$EXEDIR\App\${DEFAULTGPGPATH}"
 			StrCpy $GPGHOMEDIRECTORY "$EXEDIR\Data\${DEFAULTGPGHOME}"
 			StrCpy $ISDEFAULTDIRECTORY "true"
+			StrCpy $bolAlwaysUse32Bit false
 			Goto FoundProgramEXE
 
 	NoProgramEXE:
@@ -445,6 +466,36 @@ Section "Main"
 			${WordReplace} $1 "\" "/" "+" $3
 			${ReplaceInFile} "$PROFILEDIRECTORY\prefs.js" "file:///$2" "file:///$3"
 		${EndIf}
+		${If} ${FileExists} "$PROFILEDIRECTORY\extensions.json"
+			${WordReplace} $0 "\" "\\" "+" $2
+			${WordReplace} $1 "\" "\\" "+" $3
+			${ReplaceInFile} "$PROFILEDIRECTORY\extensions.json" "$2" "$3"
+		${EndIf}
+		${If} ${FileExists} "$PROFILEDIRECTORY\extensions.json"
+			${WordReplace} $0 "\" "/" "+" $2
+			${WordReplace} $2 " " "%20" "+" $2
+			${WordReplace} $1 "\" "/" "+" $3
+			${WordReplace} $3 " " "%20" "+" $3
+			${ReplaceInFile} "$PROFILEDIRECTORY\extensions.json" "$2" "$3"
+		${EndIf}
+		
+		${If} $LASTPROFILEDIRECTORY != $ORIGINALPROFILEDIRECTORY
+		${AndIf} ${FileExists} "$PROFILEDIRECTORY\addonStartup.json.lz4"
+			Delete "$PROFILEDIRECTORY\addonStartup.json.unpacked"
+			nsExec::Exec `"$EXEDIR\App\Bin\dejsonlz4.exe" "$PROFILEDIRECTORY\addonStartup.json.lz4" "$PROFILEDIRECTORY\addonStartup.json.unpacked"`
+			Delete "$PROFILEDIRECTORY\addonStartup.json.lz4"
+			${WordReplace} $0 "\" "/" "+" $2
+			${WordReplace} $1 "\" "/" "+" $3
+			${WordReplace} $2 " " "%20" "+" $2
+			${WordReplace} $3 " " "%20" "+" $3
+			${ReplaceInFile} "$PROFILEDIRECTORY\addonStartup.json.unpacked" "file:///$2" "file:///$3"
+			${WordReplace} $0 "\" "\\" "+" $2
+			${WordReplace} $1 "\" "\\" "+" $3
+			${ReplaceInFile} "$PROFILEDIRECTORY\addonStartup.json.unpacked" "$2" "$3"
+			nsExec::Exec `"$EXEDIR\App\Bin\jsonlz4.exe" "$PROFILEDIRECTORY\addonStartup.json.unpacked" "$PROFILEDIRECTORY\addonStartup.json.lz4"`
+			Delete "$PROFILEDIRECTORY\addonStartup.json.unpacked"
+		${EndIf}
+		
 		${GetParent} $LASTPROFILEDIRECTORY $0
 		${GetParent} $0 $0
 		${GetParent} $0 $0
@@ -457,6 +508,11 @@ Section "Main"
 		${If} ${FileExists} "$PROFILEDIRECTORY\mimeTypes.rdf"
 			${ReplaceInFile} "$PROFILEDIRECTORY\mimeTypes.rdf" $0 $1
 		${EndIf}
+		${If} ${FileExists} "$PROFILEDIRECTORY\extensions.json"
+			${WordReplace} $0 "\" "\\" "+" $2
+			${WordReplace} $1 "\" "\\" "+" $3
+			${ReplaceInFile} "$PROFILEDIRECTORY\extensions.json" "$2" "$3"
+		${EndIf}
 	
 	RunProgram:
 		StrCmp $SKIPCOMPREGFIX "true" GetPassedParameters
@@ -466,17 +522,27 @@ Section "Main"
 
 	GetPassedParameters:
 		;=== Get any passed parameters
-		${GetParameters} $0
-		StrCmp "'$0'" "''" "" LaunchProgramParameters
+		${GetParameters} $strPassedParameters
 
-		;=== No parameters
-		StrCpy $EXECSTRING `"$PROGRAMDIRECTORY\$PROGRAMEXECUTABLE" -profile "$PROFILEDIRECTORY"`
-		Goto CheckMultipleInstances
+		;=== Setup exec string	
+		System::Call kernel32::GetCurrentProcess()i.s
+		System::Call kernel32::IsWow64Process(is,*i.r0)
+		${If} $0 != 0
+		${AndIf} ${FileExists} "$PROGRAMDIRECTORY64\$PROGRAMEXECUTABLE"
+		${AndIf} ${AtLeastWin7}
+		${AndIf} $bolAlwaysUse32Bit == false
+			StrCpy $EXECSTRING `"$PROGRAMDIRECTORY64\$PROGRAMEXECUTABLE" -profile "$PROFILEDIRECTORY"`
+			StrCpy $bolUsing64Bit true
+		${Else}
+			StrCpy $EXECSTRING `"$PROGRAMDIRECTORY\$PROGRAMEXECUTABLE" -profile "$PROFILEDIRECTORY"`
+			StrCpy $bolUsing64Bit true
+		${EndIf}
+		
+		${If} $strPassedParameters != ''
+			StrCpy $EXECSTRING `$EXECSTRING $strPassedParameters`
+		${EndIf}
 
-	LaunchProgramParameters:
-		StrCpy $EXECSTRING `"$PROGRAMDIRECTORY\$PROGRAMEXECUTABLE" -profile "$PROFILEDIRECTORY" $0`
-
-	CheckMultipleInstances:
+	;CheckMultipleInstances:
 		StrCmp $ALLOWMULTIPLEINSTANCES "true" "" AdditionalParameters
 		StrCpy $EXECSTRING `$EXECSTRING -no-remote`
 
@@ -536,6 +602,7 @@ Section "Main"
 
 		${If} $3 != "" ;Be sure we didn't just GetParent on Root
 			${If} ${FileExists} "$3\CommonFiles\GPG\gpg2.exe"
+			${OrIf} ${FileExists} "$3\CommonFiles\GPG\bin\gpg.exe"
 				StrCpy $GPGPATHDIRECTORY "$3\CommonFiles\GPG"
 			${EndIf}
 		${EndIf}
@@ -543,10 +610,11 @@ Section "Main"
 		;=== Set the GPG Environment if the files are present
 		${If} ${FileExists} "$GPGPATHDIRECTORY\gpg.exe"
 		${OrIf} ${FileExists} "$GPGPATHDIRECTORY\gpg2.exe"
+		${OrIf} ${FileExists} "$GPGPATHDIRECTORY\bin\gpg.exe"
 
 			;=== Setup the Path so that gpg.exe can be found by Enigmail
 			ReadEnvStr $R0 "PATH"
-			StrCpy $R0 "$GPGPATHDIRECTORY;$R0"
+			StrCpy $R0 "$GPGPATHDIRECTORY;$GPGPATHDIRECTORY\bin;$R0"
 			System::Call 'Kernel32::SetEnvironmentVariable(t, t) i("PATH", "$R0").r0'
 
 			;=== Setup GNUPGHOME so that we don't have to use the registry
@@ -560,8 +628,10 @@ Section "Main"
 				FileWriteByte $0 "10"
 				${If} ${FileExists} "$GPGPATHDIRECTORY\gpg.exe"
 					${WordReplace} "$GPGPATHDIRECTORY\gpg.exe" "\" "\\" "+" $1
-				${Else}
+				${ElseIf} ${FileExists} "$GPGPATHDIRECTORY\gpg2.exe"
 					${WordReplace} "$GPGPATHDIRECTORY\gpg2.exe" "\" "\\" "+" $1
+				${ElseIf} ${FileExists} "$GPGPATHDIRECTORY\bin\gpg.exe"
+					${WordReplace} "$GPGPATHDIRECTORY\bin\gpg.exe" "\" "\\" "+" $1
 				${EndIf}
 				FileWrite $0 `user_pref("extensions.enigmail.agentPath", "$1");`
 				FileWriteByte $0 "13"
@@ -596,25 +666,41 @@ Section "Main"
 		CreateDirectory "$PLUGINSDIR\ContainedTemp"
 		System::Call 'Kernel32::SetEnvironmentVariable(t, t) i("TEMP", "$PLUGINSDIR\ContainedTemp").r0'
 		System::Call 'Kernel32::SetEnvironmentVariable(t, t) i("TMP", "$PLUGINSDIR\ContainedTemp").r0'
-		SetOutPath $PROGRAMDIRECTORY
+		${If} $bolUsing64Bit == true
+			SetOutPath $PROGRAMDIRECTORY64
+		${Else}
+			SetOutPath $PROGRAMDIRECTORY
+		${EndIf}
 		ExecWait $EXECSTRING
 		
 	;CheckRunning:
 		StrCmp $ALLOWMULTIPLEINSTANCES "true" TheEnd
 		
 	CheckRunning:
-		FindProcDLL::WaitProcEnd "thunderbird.exe" -1
+		${ProcessWaitClose} "thunderbird.exe" -1 $R0
 		Sleep 2000
-		FindProcDLL::FindProc "thunderbird.exe" 
-		StrCmp $R0 "1" "" TheEnd		
-		IfFileExists "$PROFILEDIRECTORY\parent.lock" CheckRunning TheEnd
+		${If} ${ProcessExists} "thunderbird.exe"
+			Goto CheckRunning
+		${EndIf}	                 
+		${If} ${ProcessExists} "updater.exe"
+			${GetProcessPath} "updater.exe" $R1
+			${If} $R1 == "$PROGRAMDIRECTORY\updater.exe"
+			${OrIf} $R1 == "$PROGRAMDIRECTORY64\updater.exe"
+				Goto CheckRunning
+			${EndIf}
+		${EndIf}	
+		Goto TheEnd
 	
 	StartProgramAndExit:
 		ReadEnvStr $strOriginalTempPath TEMP
 		CreateDirectory "$PLUGINSDIR\ContainedTemp"
 		System::Call 'Kernel32::SetEnvironmentVariable(t, t) i("TEMP", "$PLUGINSDIR\ContainedTemp").r0'
 		System::Call 'Kernel32::SetEnvironmentVariable(t, t) i("TMP", "$PLUGINSDIR\ContainedTemp").r0'
-		SetOutPath $PROGRAMDIRECTORY
+		${If} $bolUsing64Bit == true
+			SetOutPath $PROGRAMDIRECTORY64
+		${Else}
+			SetOutPath $PROGRAMDIRECTORY
+		${EndIf}	
 		Exec $EXECSTRING
 		System::Call 'Kernel32::SetEnvironmentVariable(t, t) i("TEMP", "$strOriginalTempPath").r0'
 		System::Call 'Kernel32::SetEnvironmentVariable(t, t) i("TMP", "$strOriginalTempPath").r0'
@@ -650,20 +736,23 @@ Section "Main"
 		RMDir /r "$PLUGINSDIR\${NAME}\"
 
 	TheRealEnd:
-		RMDir "$APPDATA\Mozilla\Extensions" ;=== Will only delete if empty (no /r switch)
-		RMDir "$APPDATA\Mozilla\" ;=== Will only delete if empty (no /r switch)
+		${RMDirIfNotJunction} "$APPDATA\Mozilla\Extensions" ;=== Will only delete if empty (no /r switch)
+		${RMDirIfNotJunction} "$APPDATA\Mozilla\" ;=== Will only delete if empty (no /r switch)
 		RMDir /r "$APPDATA\Thunderbird\Crash Reports"
 		Rename "$APPDATA\Thunderbird\Crash Reports-BackupByThunderbirdPortable" "$APPDATA\Thunderbird\Crash Reports"
-		RMDir "$APPDATA\Thunderbird\Profiles\" ;=== Will only delete if empty (no /r switch)
-		RMDir "$APPDATA\Thunderbird\Profile\" ;=== Will only delete if empty (no /r switch)
-		RMDir "$APPDATA\Thunderbird\" ;=== Will only delete if empty (no /r switch)
-		RMDir "$LOCALAPPDATA\gnupg\" ;=== Will only delete if empty (no /r switch)
-		RMDir "$LOCALAPPDATA\Mozilla\Extensions\" ;=== Will only delete if empty (no /r switch)
-		RMDir "$LOCALAPPDATA\Mozilla\" ;=== Will only delete if empty (no /r switch)
+		RMDir "$APPDATA\Thunderbird\Pending Pings\" ;=== Will only delete if empty (no /r switch)
+		${RMDirIfNotJunction} "$APPDATA\Thunderbird\Profiles\" ;=== Will only delete if empty (no /r switch)
+		${RMDirIfNotJunction} "$APPDATA\Thunderbird\Profile\" ;=== Will only delete if empty (no /r switch)
+		${RMDirIfNotJunction} "$APPDATA\Thunderbird\" ;=== Will only delete if empty (no /r switch)
+		${RMDirIfNotJunction} "$LOCALAPPDATA\gnupg\" ;=== Will only delete if empty (no /r switch)
+		${RMDirIfNotJunction} "$LOCALAPPDATA\Mozilla\Extensions\" ;=== Will only delete if empty (no /r switch)
+		${RMDirIfNotJunction} "$LOCALAPPDATA\Mozilla\updates" ;=== Will only delete if empty (no /r switch)
+		${RMDirIfNotJunction} "$LOCALAPPDATA\Mozilla\" ;=== Will only delete if empty (no /r switch)
 		RMDir "$LOCALAPPDATA\Thunderbird\thunderbird\updates\0" ;=== Will only delete if empty (no /r switch)
 		RMDir "$LOCALAPPDATA\Thunderbird\thunderbird\updates" ;=== Will only delete if empty (no /r switch)
 		RMDir "$LOCALAPPDATA\Thunderbird\thunderbird" ;=== Will only delete if empty (no /r switch)
-		RMDir "$LOCALAPPDATA\Thunderbird\" ;=== Will only delete if empty (no /r switch)
+		${RMDirIfNotJunction} "$LOCALAPPDATA\Thunderbird\" ;=== Will only delete if empty (no /r switch)
+		${RMDirIfNotJunction} "$LOCALAPPDATALow\Mozilla\" ;=== Will only delete if empty (no /r switch)
 		
 		${If} ${FileExists} "$GPGPATHDIRECTORY\GPGShutdown.exe"
 			ExecWait "$GPGPATHDIRECTORY\GPGShutdown.exe"
