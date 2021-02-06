@@ -117,19 +117,29 @@ ${SegmentPrePrimary}
 	Delete "$EXEDIR\App\IObitUnlocker\IObitUnlockerExtension.dll"
     ${If} $Bits = 64
 		${If} ${AtLeastWinVista}
-			CopyFiles /SILENT "$EXEDIR\App\IObitUnlocker\SysModern64\IObitUnlocker.sys" "$EXEDIR\App\IObitUnlocker"
-			CopyFiles /SILENT "$EXEDIR\App\IObitUnlocker\SysModern64\IObitUnlockerExtension.dll" "$EXEDIR\App\IObitUnlocker"
+			${If} ${AtLeastWin7}
+				CopyFiles /SILENT "$EXEDIR\App\IObitUnlocker\SysModern64\IObitUnlocker.sys" "$EXEDIR\App\IObitUnlocker"
+				CopyFiles /SILENT "$EXEDIR\App\IObitUnlocker\SysModern64\IObitUnlockerExtension.dll" "$EXEDIR\App\IObitUnlocker"
+			${Else}
+				CopyFiles /SILENT "$EXEDIR\App\IObitUnlocker\SysVista64\IObitUnlocker.sys" "$EXEDIR\App\IObitUnlocker"
+				CopyFiles /SILENT "$EXEDIR\App\IObitUnlocker\SysVista64\IObitUnlockerExtension.dll" "$EXEDIR\App\IObitUnlocker"
+			${EndIf}
 		${Else}
-			CopyFiles /SILENT "$EXEDIR\App\IObitUnlocker\SysLegacy64\IObitUnlocker.sys" "$EXEDIR\App\IObitUnlocker"
-			CopyFiles /SILENT "$EXEDIR\App\IObitUnlocker\SysLegacy64\IObitUnlockerExtension.dll" "$EXEDIR\App\IObitUnlocker"
+			CopyFiles /SILENT "$EXEDIR\App\IObitUnlocker\SysXP64\IObitUnlocker.sys" "$EXEDIR\App\IObitUnlocker"
+			CopyFiles /SILENT "$EXEDIR\App\IObitUnlocker\SysXP64\IObitUnlockerExtension.dll" "$EXEDIR\App\IObitUnlocker"
 		${EndIf}
     ${Else}
 		${If} ${AtLeastWinVista}
-			CopyFiles /SILENT "$EXEDIR\App\IObitUnlocker\SysModern32\IObitUnlocker.sys" "$EXEDIR\App\IObitUnlocker"
-			CopyFiles /SILENT "$EXEDIR\App\IObitUnlocker\SysModern32\IObitUnlockerExtension.dll" "$EXEDIR\App\IObitUnlocker"
+			${If} ${AtLeastWin7}
+				CopyFiles /SILENT "$EXEDIR\App\IObitUnlocker\SysModern32\IObitUnlocker.sys" "$EXEDIR\App\IObitUnlocker"
+				CopyFiles /SILENT "$EXEDIR\App\IObitUnlocker\SysModern32\IObitUnlockerExtension.dll" "$EXEDIR\App\IObitUnlocker"
+			${Else}
+				CopyFiles /SILENT "$EXEDIR\App\IObitUnlocker\SysVista32\IObitUnlocker.sys" "$EXEDIR\App\IObitUnlocker"
+				CopyFiles /SILENT "$EXEDIR\App\IObitUnlocker\SysVista32\IObitUnlockerExtension.dll" "$EXEDIR\App\IObitUnlocker"
+			${EndIf}
 		${Else}
-			CopyFiles /SILENT "$EXEDIR\App\IObitUnlocker\SysLegacy32\IObitUnlocker.sys" "$EXEDIR\App\IObitUnlocker"
-			CopyFiles /SILENT "$EXEDIR\App\IObitUnlocker\SysLegacy32\IObitUnlockerExtension.dll" "$EXEDIR\App\IObitUnlocker"
+			CopyFiles /SILENT "$EXEDIR\App\IObitUnlocker\SysXP32\IObitUnlocker.sys" "$EXEDIR\App\IObitUnlocker"
+			CopyFiles /SILENT "$EXEDIR\App\IObitUnlocker\SysXP32\IObitUnlockerExtension.dll" "$EXEDIR\App\IObitUnlocker"
 		${EndIf}
     ${EndIf}
 !macroend
