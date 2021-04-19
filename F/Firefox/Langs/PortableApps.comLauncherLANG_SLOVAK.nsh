@@ -1,0 +1,6 @@
+﻿LangString LauncherFileNotFound ${LANG_SLOVAK} "Aplikácia ${PORTABLEAPPNAME} nemohla byť nainštalovaná. Tento problém môžete skúsiť vyriešiť preinštalovaním. (CHYBA: $MISSINGFILEORPATH nebolo nájdené)"
+LangString LauncherAlreadyRunning ${LANG_SLOVAK} "Aplikácia ${APPNAME} je už spustená. Pred spustením aplikácie ${PORTABLEAPPNAME}, prosím, zatvorte aplikáciu ${APPNAME}."
+LangString LauncherAskCopyLocal ${LANG_SLOVAK} "Aplikácia ${PORTABLEAPPNAME} je zrejme spustená z umiestnenia, ktoré je len na čítanie. Chceli by ste ju dočasne skopírovať na pevný disk a spustiť z neho?$\n$\nPoznámka ohľadom súkromia: Ak bude vaša odpoveď Áno, vaše osobné údaje z aplikácie ${PORTABLEAPPNAME} budú dočasne skopírované na pevný disk. Aj keď táto kópia vašich údajov bude po ukončení aplikácie ${PORTABLEAPPNAME} odstránená, je možné, že sa k vašim údajom neskôr niekto dostane."
+LangString LauncherNoReadOnly ${LANG_SLOVAK} "Aplikácia ${PORTABLEAPPNAME} nemôže byť spustená z umiestnenia, ktoré je len na čítanie a bude ukončená."
+LangString LauncherPathTooLong ${LANG_SLOVAK} "Cesta k aplikácii ${PORTABLEAPPNAME} je príliš dlhá.  Prosím, skráťte cestu k aplikácii odstránením niektorých nadradených priečinkov alebo skrátením ich názvov."
+LangString LauncherNextButton ${LANG_SLOVAK} "&Ďalej >"

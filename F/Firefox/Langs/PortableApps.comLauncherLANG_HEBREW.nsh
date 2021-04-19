@@ -1,0 +1,6 @@
+﻿LangString LauncherFileNotFound ${LANG_HEBREW} "${PORTABLEAPPNAME} לא מצליח להיפתח. אולי תרצו להתקין מחדש כדי לתקן עניין זה. (*שגיאה*: לא נמצא $MISSINGFILEORPATH)"
+LangString LauncherAlreadyRunning ${LANG_HEBREW} "הרצה אחרת של ${APPNAME} כבר קיימת. אנא סיגרו הרצות אחרות של${APPNAME} לפני שתריצו את ${PORTABLEAPPNAME}."
+LangString LauncherAskCopyLocal ${LANG_HEBREW} "נראה ש-${PORTABLEAPPNAME} רץ ממקום שהוא לקריאה בלבד. האם תרצו להעתיקו באופן זמני לכונן הקשיח המקומי ולהריץ אותו משם?$\n$\nהערת פרטיות: אם תאמרו כן, המידע האישי שלכם שבתוך AppNamePortable יועתק באופן זמני לכונן מקומי. למרות שעותק זה יימחק כשתיסגרו את ${PORTABLEAPPNAME}, אולי יהיה אפשרי למישהו אחר לגשת למידע זה מאוחר יותר."
+LangString LauncherNoReadOnly ${LANG_HEBREW} "${PORTABLEAPPNAME} לא יכול לרוץ ישירות ממקום לקריאה בלבד ועכשיו ייסגר."
+LangString LauncherPathTooLong ${LANG_HEBREW} "הנתיב של ${PORTABLEAPPNAME} ארוך מדי.  אנא קצרו את הנתיב על ידי השמטת כמה ספריות אב וקיצור שמות ספרייה."
+LangString LauncherNextButton ${LANG_HEBREW} "< ה&קודם"

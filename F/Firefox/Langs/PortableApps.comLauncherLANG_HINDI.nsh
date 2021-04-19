@@ -1,0 +1,6 @@
+﻿LangString LauncherFileNotFound ${LANG_HINDI} "${PORTABLEAPPNAME} प्रारंभ नहीं किया जा सकता है। आप इस समस्या को ठीक करने के लिए पुनः स्थापित करना चाह सकते हैं। (त्रुटि: $MISSINGFILEORPATH नहीं मिला)"
+LangString LauncherAlreadyRunning ${LANG_HINDI} "${APPNAME} का एक और उदाहरण पहले से चल रहा है। ${PORTABLEAPPNAME} लॉन्च करने से पहले कृपया ${APPNAME} के अन्य उदाहरण बंद करें।"
+LangString LauncherAskCopyLocal ${LANG_HINDI} "${PORTABLEAPPNAME} उस स्थान से चल रहा प्रतीत होता है जो केवल पढ़ने योग्य है। क्या आप इसे अस्थायी रूप से स्थानीय हार्ड ड्राइव पर कॉपी करना चाहते हैं और इसे वहां से चला सकते हैं? $\n$\n गोपनीयता नोट: यदि आप हाँ कहते हैं, तो ${PORTABLEAPPNAME} के भीतर आपका व्यक्तिगत डेटा अस्थायी रूप से स्थानीय ड्राइव पर कॉपी किया जाएगा। हालांकि जब आप ${PORTABLEAPPNAME} बंद करते हैं तो आपके डेटा की यह प्रति हटा दी जाएगी, फिर भी किसी और के लिए आपके डेटा तक पहुंचना संभव हो सकता है।"
+LangString LauncherNoReadOnly ${LANG_HINDI} "${PORTABLEAPPNAME} सीधे पढ़ने-योग्य स्थान से नहीं चलाया जा सकता है और अब बंद हो जाएगा।"
+LangString LauncherPathTooLong ${LANG_HINDI} "${PORTABLEAPPNAME} का मार्ग बहुत लंबा है। कृपया कुछ मूल निर्देशिकाओं को हटाकर या निर्देशिका नामों को छोटा करके पथ को छोटा करें।"
+LangString LauncherNextButton ${LANG_HINDI} "आगामी >"

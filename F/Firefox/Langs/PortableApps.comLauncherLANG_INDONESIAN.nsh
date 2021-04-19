@@ -1,0 +1,6 @@
+﻿LangString LauncherFileNotFound ${LANG_INDONESIAN} "${PORTABLEAPPNAME} tidak dapat dimulai. Anda mungkin ingin menginstal ulang untuk memperbaiki masalah ini. (KESALAHAN: $MISSINGFILEORPATH tidak dapat ditemukan)"
+LangString LauncherAlreadyRunning ${LANG_INDONESIAN} "Contoh lain dari ${APPNAME} sudah berjalan. Silakan tutup contoh lain $ {APPNAME} sebelum meluncurkan ${PORTABLEAPPNAME}."
+LangString LauncherAskCopyLocal ${LANG_INDONESIAN} "${PORTABLEAPPNAME} tampaknya berjalan dari lokasi yang hanya-baca. Apakah Anda ingin menyalinnya sementara ke hard drive lokal dan menjalankannya dari sana?$\n$\nPrivasi Catatan: Jika Anda menjawab Ya, data pribadi Anda dalam ${PORTABLEAPPNAME} akan disalin sementara ke drive lokal. Meskipun salinan data Anda ini akan dihapus ketika Anda menutup ${PORTABLEAPPNAME}, ada kemungkinan bagi orang lain untuk mengakses data Anda nanti."
+LangString LauncherNoReadOnly ${LANG_INDONESIAN} "${PORTABLEAPPNAME} tidak dapat berjalan langsung dari lokasi hanya-baca dan sekarang akan ditutup."
+LangString LauncherPathTooLong ${LANG_INDONESIAN} "Jalan ke ${PORTABLEAPPNAME} terlalu panjang. Harap persingkat jalur dengan menghilangkan beberapa direktori induk atau mempersingkat nama direktori."
+LangString LauncherNextButton ${LANG_INDONESIAN} "&Selanjutnya >"

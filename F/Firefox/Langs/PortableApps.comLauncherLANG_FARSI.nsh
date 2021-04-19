@@ -1,0 +1,6 @@
+﻿LangString LauncherFileNotFound ${LANG_FARSI} "${PORTABLEAPPNAME} را نمی توان آغاز کرد. ممکن است بخواهید این مسئله را دوباره نصب کنید. (ERROR: $MISSINGFILEORPATH یافت نشد)"
+LangString LauncherAlreadyRunning ${LANG_FARSI} "یک نمونه دیگر از ${APPNAME} در حال اجرا است. لطفا قبل از راه اندازی ${PORTABLEAPPNAME} موارد دیگر ${APPNAME} را ببندید."
+LangString LauncherAskCopyLocal ${LANG_FARSI} "به نظر میرسد که «${PORTABLEAPPNAME} از یک مکان فقط خواندنی اجرا میشود. آیا میخواهید آن را به طور موقت کپی کنید و آن را از اینجا ببرید؟ $\n$\n توجه داشته باشید که خصوصیات: اگر بگوید بله، اطلاعات شخصی شما در ${PORTABLEAPPNAME} به طور موقت در یک درایو محلی کپی می شوند. اگرچه این نسخه از داده های شما هنگام بست${PORTABLEAPPNAME} حذف می شود ممکن است فرد دیگری بتواند به داده های شما دسترسی پیدا کند بعد."
+LangString LauncherNoReadOnly ${LANG_FARSI} "${PORTABLEAPPNAME} نمی تواند مستقیما از یک مکان فقط خواندنی اجرا شود و اکنون بسته شود."
+LangString LauncherPathTooLong ${LANG_FARSI} "مسیر به ${PORTABLEAPPNAME} بیش از حد طولانی است. لطفا با حذف برخی از دایرکتوری های والدین یا کوتاه کردن نام دایرکتوری، مسیر را کوتاه کنید"
+LangString LauncherNextButton ${LANG_FARSI} "بعدی >"
