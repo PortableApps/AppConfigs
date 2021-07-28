@@ -1,6 +1,6 @@
 ${SegmentFile}
 
-${SegmentPre}
+${SegmentInit}
 	ExpandEnvStrings $1 "%PortableApps.comDocuments%"
 	${If} $1 == ""
 	${OrIfNot} ${FileExists} "$1\*.*"
