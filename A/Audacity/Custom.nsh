@@ -2,7 +2,33 @@
 
 ${SegmentFile}
 
+${Segment.OnInit}
+	; Borrowed the following from PAL 2.2, Remove on release of PAL 2.2
+		; Work out if it's 64-bit or 32-bit
+	System::Call kernel32::GetCurrentProcess()i.s
+	System::Call kernel32::IsWow64Process(is,*i.r0)
+	${If} $0 == 0
+		StrCpy $Bits 32
+		Rename "$EXEDIR\App\Audacity64\help" "$EXEDIR\App\Audacity\help"
+		Rename "$EXEDIR\App\Audacity64\Languages" "$EXEDIR\App\Audacity\Languages"
+		Rename "$EXEDIR\App\Audacity64\nyquist" "$EXEDIR\App\Audacity\nyquist"
+		Rename "$EXEDIR\App\Audacity64\plug-ins" "$EXEDIR\App\Audacity\plug-ins"
+	${Else}
+		StrCpy $Bits 64
+		Rename "$EXEDIR\App\Audacity\help" "$EXEDIR\App\Audacity64\help"
+		Rename "$EXEDIR\App\Audacity\Languages" "$EXEDIR\App\Audacity64\Languages"
+		Rename "$EXEDIR\App\Audacity\nyquist" "$EXEDIR\App\Audacity64\nyquist"
+		Rename "$EXEDIR\App\Audacity\plug-ins" "$EXEDIR\App\Audacity64\plug-ins"
+	${EndIf}
+!macroend
+
 ${SegmentInit}
+    ${If} $Bits = 64
+        ${SetEnvironmentVariablesPath} PAcLauncherBits "64"
+	${Else}
+        ${SetEnvironmentVariablesPath} PAcLauncherBits ""
+	${EndIf}
+
 	System::Call kernel32::IsProcessorFeaturePresent(i${PF_XMMI64_INSTRUCTIONS_AVAILABLE})i.r0
 
 	${If} $0 != 0
