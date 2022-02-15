@@ -1,14 +1,25 @@
 ${SegmentFile}
 
+Var strCustomFullAppDir
+
 ${SegmentInit}
     ${If} $Bits = 64
-        ${SetEnvironmentVariablesPath} FullAppDir "$EXEDIR\App\Notepad++64"
+		StrCpy $strCustomFullAppDir "$EXEDIR\App\Notepad++64"	
     ${Else}
-        ${SetEnvironmentVariablesPath} FullAppDir "$EXEDIR\App\Notepad++"
+		StrCpy $strCustomFullAppDir "$EXEDIR\App\Notepad++"
     ${EndIf}
+	${SetEnvironmentVariablesPath} FullAppDir $strCustomFullAppDir
 !macroend
 
 ${SegmentPrePrimary}
+	${If} ${FileExists} "$strCustomFullAppDir\session.xml"
+		${GetSize} "$strCustomFullAppDir" "/M=session.xml /S=0B /G=1" $0 $1 $2
+		${If} $0 < 200
+			${If} ${FileExists} "$EXEDIR\Data\Config\session.xml"
+				Delete "$strCustomFullAppDir\session.xml"
+			${EndIf}	
+		${EndIf}
+	${EndIf}
 	${If} ${FileExists} "$EXEDIR\Data\Config\plugins\config\*.*"
 		Delete "$EXEDIR\Data\Config\plugins\config\nppPluginLis*.dll"
 		${If} $Bits = 64
