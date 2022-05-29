@@ -1,0 +1,6 @@
+﻿LangString LauncherFileNotFound ${LANG_CROATIAN} "${PORTABLEAPPNAME} se ne može pokrenuti. Možda ćete htjeti ponovno instalirati kako biste riješili ovaj problem. (GREŠKA: $MISSINGFILEORPATH nije moguće pronaći)"
+LangString LauncherAlreadyRunning ${LANG_CROATIAN} "Druga instanca aplikacije ${APPNAME} već je pokrenuta. Zatvorite druge instance aplikacije ${APPNAME} prije pokretanja ${PORTABLEAPPNAME}."
+LangString LauncherAskCopyLocal ${LANG_CROATIAN} "Čini se da se ${PORTABLEAPPNAME} izvodi s lokacije koja je samo za čitanje. Želite li ga privremeno kopirati na lokalni tvrdi disk i pokrenuti od tamo?$\n$\nNapomena o privatnosti: Ako kažete Da, vaši osobni podaci unutar ${PORTABLEAPPNAME} privremeno će se kopirati na lokalni disk. Iako će ova kopija vaših podataka biti izbrisana kada zatvorite ${PORTABLEAPPNAME}, možda će netko drugi kasnije pristupiti vašim podacima."
+LangString LauncherNoReadOnly ${LANG_CROATIAN} "${PORTABLEAPPNAME} ne može se pokrenuti izravno s lokacije samo za čitanje i sada će se zatvoriti."
+LangString LauncherPathTooLong ${LANG_CROATIAN} "Put do ${PORTABLEAPPNAME} je predugačak. Molimo skratite put uklanjanjem nekih roditeljskih direktorija ili skraćivanjem naziva direktorija."
+LangString LauncherNextButton ${LANG_CROATIAN} "Sljedeći >"

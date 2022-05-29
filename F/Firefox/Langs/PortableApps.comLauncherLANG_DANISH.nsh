@@ -1,0 +1,6 @@
+﻿LangString LauncherFileNotFound ${LANG_DANISH} "${PORTABLEAPPNAME} kan ikke startes. Du ønsker måske at geninstallere for at løse dette problem. (FEJL: $MISSINGFILEORPATH kunne ikke findes)"
+LangString LauncherAlreadyRunning ${LANG_DANISH} "En anden forekomst af ${APPNAME} kører allerede. Luk venligst andre forekomster af ${APPNAME}, før du starter ${PORTABLEAPPNAME}."
+LangString LauncherAskCopyLocal ${LANG_DANISH} "${PORTABLEAPPNAME} ser ud til at køre fra en placering, der er skrivebeskyttet. Vil du midlertidigt kopiere det til den lokale harddisk og køre det derfra?$\n$\nBemærk om beskyttelse af personlige oplysninger: Hvis du siger Ja, vil dine personlige data i ${PORTABLEAPPNAME} blive midlertidigt kopieret til et lokalt drev. Selvom denne kopi af dine data vil blive slettet, når du lukker ${PORTABLEAPPNAME}, kan det være muligt for en anden at få adgang til dine data senere."
+LangString LauncherNoReadOnly ${LANG_DANISH} "${PORTABLEAPPNAME} kan ikke køre direkte fra en skrivebeskyttet placering og vil nu lukke."
+LangString LauncherPathTooLong ${LANG_DANISH} "Stien til ${PORTABLEAPPNAME} er for lang. Forkort venligst stien ved at fjerne nogle overordnede mapper eller forkorte mappenavne."
+LangString LauncherNextButton ${LANG_DANISH} "&Næste >"

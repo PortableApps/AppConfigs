@@ -1,0 +1,6 @@
+﻿LangString LauncherFileNotFound ${LANG_VIETNAMESE} "Không thể bắt đầu ${PORTABLEAPPNAME}. Bạn có thể muốn cài đặt lại để khắc phục sự cố này. (LỖI: Không tìm thấy $MISSINGFILEORPATH)"
+LangString LauncherAlreadyRunning ${LANG_VIETNAMESE} "Một phiên bản khác của ${APPNAME} đã chạy. Vui lòng đóng các phiên bản khác của ${APPNAME} trước khi khởi chạy ${PORTABLEAPPNAME}."
+LangString LauncherAskCopyLocal ${LANG_VIETNAMESE} "${PORTABLEAPPNAME} dường như đang chạy từ một vị trí chỉ đọc. Bạn có muốn tạm thời sao chép nó vào ổ cứng cục bộ và chạy nó từ đó không?$\n$\nBảo mật Lưu ý: Nếu bạn nói Có, dữ liệu cá nhân của bạn trong ${PORTABLEAPPNAME} sẽ được sao chép tạm thời vào ổ đĩa cục bộ. Mặc dù bản sao dữ liệu này của bạn sẽ bị xóa khi bạn đóng ${PORTABLEAPPNAME}, nhưng người khác có thể truy cập vào dữ liệu của bạn sau này."
+LangString LauncherNoReadOnly ${LANG_VIETNAMESE} "${PORTABLEAPPNAME} không thể chạy trực tiếp từ vị trí chỉ đọc và hiện sẽ đóng."
+LangString LauncherPathTooLong ${LANG_VIETNAMESE} "Đường dẫn đến ${PORTABLEAPPNAME} quá dài. Hãy rút ngắn đường dẫn bằng cách loại bỏ một số thư mục mẹ hoặc rút ngắn tên thư mục."
+LangString LauncherNextButton ${LANG_VIETNAMESE} "Kế tiếp >"

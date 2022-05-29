@@ -1,0 +1,6 @@
+﻿LangString LauncherFileNotFound ${LANG_LITHUANIAN} "${PORTABLEAPPNAME} negalima paleisti. Galbūt norėsite įdiegti iš naujo, kad išspręstumėte šią problemą. (KLAIDA: $MISSINGFILEORPATH nepavyko rasti)"
+LangString LauncherAlreadyRunning ${LANG_LITHUANIAN} "Kitas ${APPNAME} egzempliorius jau veikia. Uždarykite kitus ${APPNAME} egzempliorius prieš paleisdami ${PORTABLEAPPNAME}."
+LangString LauncherAskCopyLocal ${LANG_LITHUANIAN} "Atrodo, kad ${PORTABLEAPPNAME} veikia tik skaitomoje vietoje. Ar norėtumėte laikinai nukopijuoti jį į vietinį standųjį diską ir paleisti iš ten?$\n$\nPrivatumo pastaba: jei pasakysite Taip, jūsų asmeniniai ${PORTABLEAPPNAME} duomenys bus laikinai nukopijuoti į vietinį diską. Nors ši jūsų duomenų kopija bus ištrinta, kai uždarysite ${PORTABLEAPPNAME}, vėliau kažkas kitas gali pasiekti jūsų duomenis."
+LangString LauncherNoReadOnly ${LANG_LITHUANIAN} "${PORTABLEAPPNAME} negali paleisti tiesiogiai iš tik skaitomos vietos ir dabar bus uždaryta."
+LangString LauncherPathTooLong ${LANG_LITHUANIAN} "Kelias į ${PORTABLEAPPNAME} per ilgas. Sutrumpinkite kelią pašalindami kai kuriuos pirminius katalogus arba sutrumpindami katalogų pavadinimus."
+LangString LauncherNextButton ${LANG_LITHUANIAN} "Kitas >"

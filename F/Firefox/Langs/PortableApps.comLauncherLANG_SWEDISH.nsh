@@ -1,0 +1,6 @@
+﻿LangString LauncherFileNotFound ${LANG_SWEDISH} "${PORTABLEAPPNAME} kan inte startas. Du kanske vill installera om för att åtgärda problemet. (FEL: $MISSINGFILEORPATH kunde inte hittas)"
+LangString LauncherAlreadyRunning ${LANG_SWEDISH} "En annan instans av ${APPNAME} körs redan. Stäng andra instanser av ${APPNAME} innan du startar ${PORTABLEAPPNAME}."
+LangString LauncherAskCopyLocal ${LANG_SWEDISH} "${PORTABLEAPPNAME} verkar köras från en plats som är skrivskyddad. Vill du tillfälligt kopiera den till den lokala hårddisken och köra den därifrån?$\n$\nSekretess Obs: Om du säger Ja, kommer dina personliga data i ${PORTABLEAPPNAME} tillfälligt att kopieras till en lokal enhet. Även om den här kopian av din data kommer att raderas när du stänger ${PORTABLEAPPNAME}, kan det vara möjligt för någon annan att komma åt din data senare."
+LangString LauncherNoReadOnly ${LANG_SWEDISH} "${PORTABLEAPPNAME} kan inte köras direkt från en skrivskyddad plats och kommer nu att stängas."
+LangString LauncherPathTooLong ${LANG_SWEDISH} "Sökvägen till ${PORTABLEAPPNAME} är för lång. Förkorta sökvägen genom att ta bort några överordnade kataloger eller förkorta katalognamn."
+LangString LauncherNextButton ${LANG_SWEDISH} "Nästa >"

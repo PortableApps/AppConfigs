@@ -1,6 +1,8 @@
-﻿;Copyright 2004-2018 John T. Haller of PortableApps.com
+﻿!addplugindir /x86-unicode ".\Plugins"
 
-;Website: http://PortableApps.com/FirefoxPortable
+;Copyright 2004-2022 John T. Haller of PortableApps.com
+
+;Website: https://portableapps.com/go/FirefoxPortable
 
 ;This software is OSI Certified Open Source Software.
 ;OSI Certified is a certification mark of the Open Source Initiative.
@@ -12,12 +14,12 @@
 
 ;This program is distributed in the hope that it will be useful,
 ;but WITHOUT ANY WARRANTY; without even the implied warranty of
-;MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 ;GNU General Public License for more details.
 
 ;You should have received a copy of the GNU General Public License
 ;along with this program; if not, write to the Free Software
-;Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+;Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 !define PF_XMMI64_INSTRUCTIONS_AVAILABLE 10
 
@@ -26,10 +28,10 @@
 !define APPNAME "Firefox"
 !define NAME "FirefoxPortable"
 !define AppID "FirefoxPortable"
-!define VER "2.1.2.0"
+!define VER "2.5.0.0"
 !define WEBSITE "PortableApps.com/FirefoxPortable"
 !define DEFAULTEXE "firefox.exe"
-!define DEFAULTAPPDIR "firefox"
+!define DEFAULTAPPDIR "Firefox"
 !define LAUNCHERLANGUAGE "English"
 
 ;=== Program Details
@@ -38,14 +40,14 @@ OutFile "..\..\${NAME}.exe"
 Caption "${PORTABLEAPPNAME} | PortableApps.com"
 VIProductVersion "${VER}"
 VIAddVersionKey ProductName "${PORTABLEAPPNAME}"
-VIAddVersionKey Comments "Allows ${APPNAME} to be run from a removable drive.  For additional details, visit ${WEBSITE}"
+VIAddVersionKey Comments "Allows ${APPNAME} to be run from a removable drive. For additional details, visit ${WEBSITE}"
 VIAddVersionKey CompanyName "PortableApps.com"
 VIAddVersionKey LegalCopyright "John T. Haller"
 VIAddVersionKey FileDescription "${PORTABLEAPPNAME}"
 VIAddVersionKey FileVersion "${VER}"
 VIAddVersionKey ProductVersion "${VER}"
 VIAddVersionKey InternalName "${PORTABLEAPPNAME}"
-VIAddVersionKey LegalTrademarks "Firefox is a Registered Trademark of The Mozilla Foundation.  PortableApps.com is a Registered Trademark of Rare Ideas, LLC."
+VIAddVersionKey LegalTrademarks "Firefox is a Registered Trademark of The Mozilla Foundation. PortableApps.com is a Registered Trademark of Rare Ideas, LLC."
 VIAddVersionKey OriginalFilename "${NAME}.exe"
 ;VIAddVersionKey PrivateBuild ""
 ;VIAddVersionKey SpecialBuild ""
@@ -83,8 +85,10 @@ SetDatablockOptimize On
 
 ;(Custom)
 !include CheckForPlatformSplashDisable.nsh
+!include ProcFunc.nsh
 !include ReplaceInFileWithTextReplace.nsh
 !include ReadINIStrWithDefault.nsh
+!include RMDirIfNotJunction.nsh
 !include SetFileAttributesDirectoryNormal.nsh
 
 ;=== Program Icon
@@ -98,6 +102,7 @@ LoadLanguageFile "${NSISDIR}\Contrib\Language files\${LAUNCHERLANGUAGE}.nlf"
 !include PortableApps.comLauncherLANG_${LAUNCHERLANGUAGE}.nsh
 
 ;=== Variables
+Var PROGRAMDATA ;Missing system var
 Var PROGRAMDIRECTORY
 Var PROGRAMDIRECTORY64
 Var PROFILEDIRECTORY
@@ -133,12 +138,18 @@ Var bolLauncherIsAlreadyRunning
 Var strPassedParameters
 Var bolAlwaysUse32Bit
 Var bolUsing64Bit
+Var strTaskBarID
+Var strTaskBarHash
+Var strCityHash
+
 ;=== START INTEGRITY CHECK 1.1 Var
 Var bolCustomIntegrityCheckStartUnsupported
 	Var strCustomIntegrityCheckVersion
 ;=== END INTEGRITY CHECK
 
 Section .onInit
+	ExpandEnvStrings $PROGRAMDATA "%PROGRAMDATA%"
+
 	System::Call kernel32::IsProcessorFeaturePresent(i${PF_XMMI64_INSTRUCTIONS_AVAILABLE})i.r0
 
 	${If} $0 == 0
@@ -186,7 +197,7 @@ Section .onInit
 
 		${VersionCompare} $0 $1 $2
 		${If} $2 == 1		
-			MessageBox MB_YESNO|MB_ICONQUESTION|MB_DEFBUTTON2 `Integrity Failure Warning: ${NamePortable} was installed or upgraded without using its installer and some critical files may have been modified.  This could cause data loss, personal data left behind on a shared PC, functionality issues, and/or may be a violation of the application's license. Neither the application publisher nor PortableApps.com will be responsible for any issues you encounter.$\r$\n$\r$\nWould you like to start ${NamePortable} in its current unsupported state?` IDYES CustomIntegrityCheckGotoStartAnyway IDNO CustomIntegrityCheckGotoDownloadQuestion
+			MessageBox MB_YESNO|MB_ICONQUESTION|MB_DEFBUTTON2 `Integrity Failure Warning: ${NamePortable} was installed or upgraded without using its installer and some critical files may have been modified. This could cause data loss, personal data left behind on a shared PC, functionality issues, and/or may be a violation of the application's license. Neither the application publisher nor PortableApps.com will be responsible for any issues you encounter.$\r$\n$\r$\nWould you like to start ${NamePortable} in its current unsupported state?` IDYES CustomIntegrityCheckGotoStartAnyway IDNO CustomIntegrityCheckGotoDownloadQuestion
 		
 			CustomIntegrityCheckGotoDownloadQuestion:
 			;Check to ensure we have a valid homepage before asking the user
@@ -279,7 +290,8 @@ Section "Main"
 		StrCpy $ISDEFAULTDIRECTORY "true"
 	
 	EndINI:
-		IfFileExists "$PROGRAMDIRECTORY\$PROGRAMEXECUTABLE" FoundProgramEXE NoProgramEXE
+		IfFileExists "$PROGRAMDIRECTORY\$PROGRAMEXECUTABLE" FoundProgramEXE
+		IfFileExists "$PROGRAMDIRECTORY64\$PROGRAMEXECUTABLE" FoundProgramEXE NoProgramEXE
 
 	NoINI:
 		;=== No INI file, so we'll use the defaults
@@ -292,7 +304,10 @@ Section "Main"
 		StrCpy $DISABLEINTELLIGENTSTART "false"
 		StrCpy $bolAlwaysUse32Bit false
 
-		IfFileExists "$EXEDIR\App\${DEFAULTAPPDIR}\${DEFAULTEXE}" "" CheckPortableProgramDIR
+		${IfNot} ${FileExists} "$EXEDIR\App\${DEFAULTAPPDIR}\${DEFAULTEXE}"
+		${AndIfNot} ${FileExists} "$EXEDIR\App\${DEFAULTAPPDIR}64\${DEFAULTEXE}" 
+			Goto CheckPortableProgramDIR
+		${EndIf}
 			StrCpy $PROGRAMDIRECTORY "$EXEDIR\App\${DEFAULTAPPDIR}"
 			StrCpy $PROGRAMDIRECTORY64 "$EXEDIR\App\${DEFAULTAPPDIR}64"
 			StrCpy $PROFILEDIRECTORY "$EXEDIR\Data\profile"
@@ -302,7 +317,11 @@ Section "Main"
 			Goto FoundProgramEXE
 	
 	CheckPortableProgramDIR:
-			IfFileExists "$EXEDIR\${NAME}\App\${DEFAULTAPPDIR}\${DEFAULTEXE}" "" NoProgramEXE
+			${IfNot} ${FileExists} "$EXEDIR\${NAME}\App\${DEFAULTAPPDIR}\${DEFAULTEXE}"
+			${AndIfNot} ${FileExists} "$EXEDIR\${NAME}\App\${DEFAULTAPPDIR}64\${DEFAULTEXE}"
+				Goto NoProgramEXE
+			${EndIf}
+			
 			StrCpy $PROGRAMDIRECTORY "$EXEDIR\${NAME}\App\${DEFAULTAPPDIR}"
 			StrCpy $PROGRAMDIRECTORY64 "$EXEDIR\${NAME}\App\${DEFAULTAPPDIR}64"
 			StrCpy $PROFILEDIRECTORY "$EXEDIR\${NAME}\Data\profile"
@@ -351,12 +370,16 @@ Section "Main"
 	;CheckIfRunning:
 		;=== Check if running
 		StrCmp $ALLOWMULTIPLEINSTANCES "true" ProfileWork
-		FindProcDLL::FindProc "firefox.exe"
-		StrCmp $R0 "1" "" CheckForCrashReports
+		${If} ${ProcessExists} "firefox.exe"
 			;=== Is launcher already running?
 			StrCmp $bolLauncherIsAlreadyRunning false WarnAnotherInstance
 				StrCpy $SECONDARYLAUNCH "true"
 				Goto RunProgram
+		${Else}
+			Goto CheckForCrashReports
+		${EndIf}
+		StrCmp $R0 "1" "" CheckForCrashReports
+	
 
 	WarnAnotherInstance:
 		MessageBox MB_OK|MB_ICONINFORMATION `$(LauncherAlreadyRunning)`
@@ -435,12 +458,20 @@ Section "Main"
 	DisplaySplash:
 		${CheckForPlatformSplashDisable} $DISABLESPLASHSCREEN
 		StrCmp $DISABLESPLASHSCREEN "true" SkipSplashScreen
+		${IfNot} ${FileExists} "$PROFILEDIRECTORY\favicons.sqlite-wal"
 			;=== Show the splash screen before processing the files
 			InitPluginsDir
 			File /oname=$PLUGINSDIR\splash.jpg "${NAME}.jpg"
 			newadvsplash::show /NOUNLOAD 2000 0 0 -1 /L $PLUGINSDIR\splash.jpg
+		${EndIf}
 
 	SkipSplashScreen:
+		${ReadINIStrWithDefault} $strTaskBarHash "$EXEDIR\App\AppInfo\appinfo.ini" "Details" "AppID" "FirefoxPortable"
+		CreateDirectory "$PROGRAMDATA\Mozilla\updates\$strTaskBarHash"
+		${If} ${FileExists} "$SettingsDirectory\update-config.json"
+			CopyFiles /SILENT "$SettingsDirectory\update-config.json" "$PROGRAMDATA\Mozilla\updates\$strTaskBarHash"
+		${EndIf}	
+	
 		;=== Run locally if needed (aka Portable Firefox Live)
 		StrCmp $RUNLOCALLY "true" "" CompareProfilePath
 		RMDir /r "$TEMP\${NAME}\"
@@ -474,6 +505,8 @@ Section "Main"
 		;=== Replace drive letters without impacting other instances of the letter in prefs.js
 		${ReplaceInFileCS} "$PROFILEDIRECTORY\prefs.js" `file:///$2` `file:///$3`
 		${ReplaceInFileCS} "$PROFILEDIRECTORY\prefs.js" `", "$2:\\` `", "$3:\\`
+		
+		
 	
 	FixPrefsJsPart2:
 		;=== Be sure the default browser check is disabled
@@ -485,7 +518,9 @@ Section "Main"
 		FileWriteByte $0 "13"
 		FileWriteByte $0 "10"
 		StrCmp "$LOCALHOMEPAGE" "" FixPrefsJsClose
-		FileWrite $0 `user_pref("browser.startup.homepage", "file:///$EXEDIR/$LOCALHOMEPAGE");`
+		StrCpy $3 $EXEDIR
+		${WordReplace} $3 "\" "/" "+" $3
+		FileWrite $0 `user_pref("browser.startup.homepage", "file:///$3/$LOCALHOMEPAGE");`
 		FileWriteByte $0 "13"
 		FileWriteByte $0 "10"
 
@@ -501,6 +536,7 @@ Section "Main"
 		${GetParent} $1 $1
 		StrCpy $1 '$1\' ;current FirefoxPortable directory
 		StrCmp $0 $1 RunProgram
+			
 		${If} ${FileExists} "$PROFILEDIRECTORY\pluginreg.dat"
 			${ReplaceInFile} "$PROFILEDIRECTORY\pluginreg.dat" $0 $1
 		${EndIf}
@@ -519,12 +555,79 @@ Section "Main"
 			${WordReplace} $0 "\" "/" "+" $2
 			${WordReplace} $1 "\" "/" "+" $3
 			${ReplaceInFile} "$PROFILEDIRECTORY\prefs.js" "file:///$2" "file:///$3"
+			
+			${WordReplace} $0 "\" "\\" "+" $2
+			${WordReplace} $1 "\" "\\" "+" $3
+			${ReplaceInFile} "$PROFILEDIRECTORY\prefs.js" `"$2\\` `"$3\\`
+			
+			${GetParent} $0 $2
+			${GetParent} $1 $3
+			${If} $2 != ""
+			${AndIf} $3 != ""
+				${WordReplace} $2 "\" "/" "+" $2
+				${WordReplace} $3 "\" "/" "+" $3
+				${ReplaceInFile} "$PROFILEDIRECTORY\prefs.js" "file:///$2" "file:///$3"
+				
+				${GetParent} $0 $2
+				${GetParent} $1 $3
+				${WordReplace} $2 "\" "\\" "+" $2
+				${WordReplace} $3 "\" "\\" "+" $3
+				${ReplaceInFile} "$PROFILEDIRECTORY\prefs.js" `"$2\\` `"$3\\`
+				
+				${GetParent} $0 $2
+				${GetParent} $1 $3
+				${GetParent} $2 $2
+				${GetParent} $3 $3
+				${If} $2 != ""
+				${AndIf} $3 != ""
+					${WordReplace} $2 "\" "/" "+" $2
+					${WordReplace} $3 "\" "/" "+" $3
+					${ReplaceInFile} "$PROFILEDIRECTORY\prefs.js" "file:///$2" "file:///$3"
+					
+					${GetParent} $0 $2
+					${GetParent} $1 $3
+					${GetParent} $2 $2
+					${GetParent} $3 $3
+					${WordReplace} $2 "\" "\\" "+" $2
+					${WordReplace} $3 "\" "\\" "+" $3
+					${ReplaceInFile} "$PROFILEDIRECTORY\prefs.js" `"$2\\` `"$3\\`
+				${EndIf}
+			${EndIf}
 		${EndIf}
 		${If} ${FileExists} "$PROFILEDIRECTORY\extensions.json"
 			${WordReplace} $0 "\" "\\" "+" $2
 			${WordReplace} $1 "\" "\\" "+" $3
 			${ReplaceInFile} "$PROFILEDIRECTORY\extensions.json" "$2" "$3"
 		${EndIf}
+		${If} ${FileExists} "$PROFILEDIRECTORY\extensions.json"
+			${WordReplace} $0 "\" "/" "+" $2
+			${WordReplace} $2 " " "%20" "+" $2
+			${WordReplace} $1 "\" "/" "+" $3
+			${WordReplace} $3 " " "%20" "+" $3
+			${ReplaceInFile} "$PROFILEDIRECTORY\extensions.json" "$2" "$3"
+		${EndIf}
+		${If} ${FileExists} "$PROFILEDIRECTORY\extensions.json"
+			${WordReplace} $0 "\" "\\" "+" $2
+			${WordReplace} $1 "\" "\\" "+" $3
+			${ReplaceInFile} "$PROFILEDIRECTORY\extensions.json" "$2" "$3"
+		${EndIf}
+		${If} $LASTPROFILEDIRECTORY != $ORIGINALPROFILEDIRECTORY
+		${AndIf} ${FileExists} "$PROFILEDIRECTORY\addonStartup.json.lz4"
+			Delete "$PROFILEDIRECTORY\addonStartup.json.unpacked"
+			nsExec::Exec `"$EXEDIR\App\Bin\dejsonlz4.exe" "$PROFILEDIRECTORY\addonStartup.json.lz4" "$PROFILEDIRECTORY\addonStartup.json.unpacked"`
+			Delete "$PROFILEDIRECTORY\addonStartup.json.lz4"
+			${WordReplace} $0 "\" "/" "+" $2
+			${WordReplace} $1 "\" "/" "+" $3
+			${WordReplace} $2 " " "%20" "+" $2
+			${WordReplace} $3 " " "%20" "+" $3
+			${ReplaceInFile} "$PROFILEDIRECTORY\addonStartup.json.unpacked" "file:///$2" "file:///$3"
+			${WordReplace} $0 "\" "\\" "+" $2
+			${WordReplace} $1 "\" "\\" "+" $3
+			${ReplaceInFile} "$PROFILEDIRECTORY\addonStartup.json.unpacked" "$2" "$3"
+			nsExec::Exec `"$EXEDIR\App\Bin\jsonlz4.exe" "$PROFILEDIRECTORY\addonStartup.json.unpacked" "$PROFILEDIRECTORY\addonStartup.json.lz4"`
+			Delete "$PROFILEDIRECTORY\addonStartup.json.unpacked"
+		${EndIf}
+		
 		${GetParent} $LASTPROFILEDIRECTORY $0
 		${GetParent} $0 $0
 		${GetParent} $0 $0
@@ -536,11 +639,6 @@ Section "Main"
 		StrCmp $0 $1 RunProgram
 		${If} ${FileExists} "$PROFILEDIRECTORY\mimeTypes.rdf"
 			${ReplaceInFile} "$PROFILEDIRECTORY\mimeTypes.rdf" $0 $1
-		${EndIf}
-		${If} ${FileExists} "$PROFILEDIRECTORY\extensions.json"
-			${WordReplace} $0 "\" "\\" "+" $2
-			${WordReplace} $1 "\" "\\" "+" $3
-			${ReplaceInFile} "$PROFILEDIRECTORY\extensions.json" "$2" "$3"
 		${EndIf}
 
 	RunProgram:
@@ -561,19 +659,31 @@ Section "Main"
 		${AndIf} ${AtLeastWin7}
 		${AndIf} $bolAlwaysUse32Bit == false
 			StrCpy $EXECSTRING `"$PROGRAMDIRECTORY64\$PROGRAMEXECUTABLE" -profile "$PROFILEDIRECTORY"`
+			StrCpy $strTaskBarID "$PROGRAMDIRECTORY64"
+			CityHash::GetCityHash64 "$PROGRAMDIRECTORY64"
+			Pop $strCityHash
 			StrCpy $bolUsing64Bit true
 		${Else}
 			StrCpy $EXECSTRING `"$PROGRAMDIRECTORY\$PROGRAMEXECUTABLE" -profile "$PROFILEDIRECTORY"`
+			StrCpy $strTaskBarID "$PROGRAMDIRECTORY"
+			CityHash::GetCityHash64 "$PROGRAMDIRECTORY"
+			Pop $strCityHash
 			StrCpy $bolUsing64Bit false
 		${EndIf}
+			
 		
+			
 		${If} $strPassedParameters != ''
 			StrCpy $EXECSTRING `$EXECSTRING $strPassedParameters`
 		${EndIf}
+		${registry::Write} "HKCU\SOFTWARE\Mozilla\Firefox\TaskBarIDs" "$strTaskBarID" "$strTaskBarHash" "REG_SZ" $R1
 		
 	;CheckMultipleInstances:
 		StrCmp $ALLOWMULTIPLEINSTANCES "true" "" AdditionalParameters
-		StrCpy $EXECSTRING `$EXECSTRING -no-remote`
+		${IfNot} ${FileExists} "$PROFILEDIRECTORY\places.sqlite-wal"
+		${AndIf} ${ProcessExists} "firefox.exe"
+			StrCpy $EXECSTRING `$EXECSTRING -new-instance`
+		${EndIf}
 
 	AdditionalParameters:
 		StrCmp $ADDITIONALPARAMETERS "" PluginsEnvironment
@@ -653,14 +763,19 @@ Section "Main"
 		StrCmp $ALLOWMULTIPLEINSTANCES "true" CheckIfRemoveLocalFiles
 		
 	CheckRunning:
-		FindProcDLL::WaitProcEnd "firefox.exe" -1
+		${ProcessWaitClose} "firefox.exe" -1 $R0
 		Sleep 2000
-		FindProcDLL::FindProc "firefox.exe"                  
-		StrCmp $R0 "1" CheckRunning
-		FindProcDLL::FindProc "$PROGRAMDIRECTORY\updater.exe"                  
-		StrCmp $R0 "1" CheckRunning
-		FindProcDLL::FindProc "$PROGRAMDIRECTORY64\updater.exe"                  
-		StrCmp $R0 "1" CheckRunning CleanupRunLocally
+		${If} ${ProcessExists} "firefox.exe"
+			Goto CheckRunning
+		${EndIf}
+		${If} ${ProcessExists} "updater.exe"
+			${GetProcessPath} "updater.exe" $R1
+			${If} $R1 == "$PROGRAMDIRECTORY\updater.exe"
+			${OrIf} $R1 == "$PROGRAMDIRECTORY64\updater.exe"
+				Goto CheckRunning
+			${EndIf}
+		${EndIf}	
+		Goto CleanupRunLocally
 	
 	StartProgramAndExit:
 		SetOutPath $PROGRAMDIRECTORY
@@ -672,9 +787,11 @@ Section "Main"
 		RMDir /r "$TEMP\${NAME}\"
 
 	CheckIfRemoveLocalFiles:
-		FindProcDLL::FindProc "firefox.exe"
-		Pop $R0
-		StrCmp $R0 "1" TheEnd RemoveLocalFiles
+		${If} ${ProcessExists} "firefox.exe"
+			Goto TheEnd
+		${Else}
+			Goto RemoveLocalFiles
+		${EndIf}
 
 	RemoveLocalFiles:
 		StrCmp $ALLOWMULTIPLEINSTANCES "true" RemoveLocalFiles2
@@ -695,13 +812,13 @@ Section "Main"
 		RMDir "$APPDATA\Mozilla\Firefox\Pending Pings\" ;=== Will only delete if empty (no /r switch)
 		RMDir "$APPDATA\Mozilla\Firefox\Profiles\" ;=== Will only delete if empty (no /r switch)
 		RMDir "$APPDATA\Mozilla\Firefox\Profile\" ;=== Will only delete if empty (no /r switch)
-		RMDir "$APPDATA\Mozilla\Firefox\" ;=== Will only delete if empty (no /r switch)
+		${RMDirIfNotJunction} "$APPDATA\Mozilla\Firefox\" ;=== Will only delete if empty
 		RMDir "$APPDATA\Mozilla\SystemExtensionsDev\" ;=== Will only delete if empty (no /r switch)
-		RMDir "$APPDATA\Mozilla\" ;=== Will only delete if empty (no /r switch)	
+		${RMDirIfNotJunction} "$APPDATA\Mozilla\" ;=== Will only delete if empty
 		RMDir "$LOCALAPPDATA\Mozilla\Firefox\firefox\updates\0" ;=== Will only delete if empty (no /r switch)
 		RMDir "$LOCALAPPDATA\Mozilla\Firefox\firefox\updates" ;=== Will only delete if empty (no /r switch)
 		RMDir "$LOCALAPPDATA\Mozilla\Firefox\firefox" ;=== Will only delete if empty (no /r switch)
-		RMDir "$LOCALAPPDATA\Mozilla\Firefox\" ;=== Will only delete if empty (no /r switch)
+		${RMDirIfNotJunction} "$LOCALAPPDATA\Mozilla\Firefox\" ;=== Will only delete if empty
 
 		;Remove empty directories left due to a Firefox updater bug
 		${If} ${FileExists} "$LOCALAPPDATA\Mozilla\updates\*.*"	
@@ -719,9 +836,40 @@ Section "Main"
 			FindClose $0
 		${EndIf}
 		
-		RMDir "$LOCALAPPDATA\Mozilla\updates" ;=== Will only delete if empty (no /r switch)
-		RMDir "$LOCALAPPDATA\Mozilla\" ;=== Will only delete if empty (no /r switch)
-		RMDir "$LOCALAPPDATALow\Mozilla\" ;=== Will only delete if empty (no /r switch)
+		${RMDirIfNotJunction} "$LOCALAPPDATA\Mozilla\updates" ;=== Will only delete if empty (no /r switch)
+		${RMDirIfNotJunction} "$LOCALAPPDATA\Mozilla\" ;=== Will only delete if empty (no /r switch)
+		${RMDirIfNotJunction} "$LOCALAPPDATALow\Mozilla\" ;=== Will only delete if empty (no /r switch)
+		
+		${If} ${FileExists} "$PROGRAMDATA\Mozilla\updates\$strTaskBarHash\update-config.json"
+			Delete "$SettingsDirectory\update-config.json"
+			CopyFiles /SILENT "$PROGRAMDATA\Mozilla\updates\$strTaskBarHash\update-config.json" "$SettingsDirectory"
+		${EndIf}
+		${If} ${FileExists} "$PROGRAMDATA\Mozilla-1de4eec8-1241-4177-a864-e594e8d1fb38\updates\$strTaskBarHash\update-config.json"
+			Delete "$SettingsDirectory\update-config.json"
+			CopyFiles /SILENT "$PROGRAMDATA\Mozilla-1de4eec8-1241-4177-a864-e594e8d1fb38\updates\$strTaskBarHash\update-config.json" "$SettingsDirectory"
+		${EndIf}
+		RMDir /r "$PROGRAMDATA\Mozilla\updates\$strTaskBarHash"
+		RMDir /r "$PROGRAMDATA\Mozilla\updates\$strCityHash"
+		RMDir /r "$PROGRAMDATA\Mozilla-1de4eec8-1241-4177-a864-e594e8d1fb38\updates\$strTaskBarHash"
+		RMDir /r "$PROGRAMDATA\Mozilla-1de4eec8-1241-4177-a864-e594e8d1fb38\updates\$strCityHash"
+		${RMDirIfNotJunction} "$PROGRAMDATA\Mozilla\updates"
+		${RMDirIfNotJunction} "$PROGRAMDATA\Mozilla-1de4eec8-1241-4177-a864-e594e8d1fb38\updates"
+		Delete "$PROGRAMDATA\Mozilla\profile_count_$strTaskBarHash.json"
+		Delete "$PROGRAMDATA\Mozilla\profile_count_$strCityHash.json"
+		Delete "$PROGRAMDATA\Mozilla\uninstall_ping_$strTaskBarHash_*.json"
+		Delete "$PROGRAMDATA\Mozilla\UpdateLock-$strCityHash"
+		Delete "$PROGRAMDATA\Mozilla\UpdateLock-$strTaskBarHash"
+		Delete "$PROGRAMDATA\Mozilla-1de4eec8-1241-4177-a864-e594e8d1fb38\profile_count_$strTaskBarHash.json"
+		Delete "$PROGRAMDATA\Mozilla-1de4eec8-1241-4177-a864-e594e8d1fb38\profile_count_$strCityHash.json"
+		Delete "$PROGRAMDATA\Mozilla-1de4eec8-1241-4177-a864-e594e8d1fb38\uninstall_ping_$strTaskBarHash_*.json"
+		Delete "$PROGRAMDATA\Mozilla-1de4eec8-1241-4177-a864-e594e8d1fb38\UpdateLock-$strCityHash"
+		Delete "$PROGRAMDATA\Mozilla-1de4eec8-1241-4177-a864-e594e8d1fb38\UpdateLock-$strTaskBarHash"
+		${RMDirIfNotJunction} "$PROGRAMDATA\Mozilla"
+		${RMDirIfNotJunction} "$PROGRAMDATA\Mozilla-1de4eec8-1241-4177-a864-e594e8d1fb38"
+		
+		RMDir "$TEMP\Mozilla\mozilla-temp-files"
+		
+		DeleteRegValue HKCU "SOFTWARE\Mozilla\Firefox\TaskBarIDs" "$strTaskBarID"
 
 		StrCmp $MOZILLAORGKEYEXISTS "true" RemoveMachineRegistryKey
 			${registry::DeleteKey} "HKEY_CURRENT_USER\Software\mozilla.org" $R0
@@ -739,6 +887,11 @@ Section "Main"
 			${registry::Read} "HKCU\Software\Mozilla\Firefox\Crash Reporter" "SubmitCrashReport" $R1 $R2
 			WriteINIStr "$SETTINGSDIRECTORY\${NAME}Settings.ini" "${NAME}Settings" "SubmitCrashReport" "$R1"
 			
+			${registry::DeleteKey} "HKCU\Software\Mozilla\Firefox\Installer\$strCityHash" $R0
+			${registry::DeleteKeyEmpty} "HKCU\Software\Mozilla\Firefox\Installer" $R0
+			${registry::DeleteKeyEmpty} "HKCU\Software\Mozilla\Firefox\TaskBarIDs" $R0
+			${registry::DeleteKeyEmpty} "HKCU\Software\Mozilla\Firefox" $R0
+			${registry::DeleteKeyEmpty} "HKCU\Software\Mozilla" $R0
 			${If} $bolHKCUSoftwareMozillaExists == true
 				${If} $bolHKCUSoftwareMozillaFirefoxExists == true
 					${If} $bolHKCUSoftwareMozillaFirefoxCrashReporterExists == true
