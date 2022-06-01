@@ -28,11 +28,12 @@
 !define APPNAME "Firefox"
 !define NAME "FirefoxPortable"
 !define AppID "FirefoxPortable"
-!define VER "2.5.0.0"
+!define VER "2.6.0.0"
 !define WEBSITE "PortableApps.com/FirefoxPortable"
 !define DEFAULTEXE "firefox.exe"
 !define DEFAULTAPPDIR "Firefox"
 !define LAUNCHERLANGUAGE "English"
+!define bolLegacyUpdate false
 
 ;=== Program Details
 Name "${PORTABLEAPPNAME}"
@@ -467,10 +468,18 @@ Section "Main"
 
 	SkipSplashScreen:
 		${ReadINIStrWithDefault} $strTaskBarHash "$EXEDIR\App\AppInfo\appinfo.ini" "Details" "AppID" "FirefoxPortable"
-		CreateDirectory "$PROGRAMDATA\Mozilla\updates\$strTaskBarHash"
-		${If} ${FileExists} "$SettingsDirectory\update-config.json"
-			CopyFiles /SILENT "$SettingsDirectory\update-config.json" "$PROGRAMDATA\Mozilla\updates\$strTaskBarHash"
-		${EndIf}	
+		
+		${If} ${bolLegacyUpdate} == true
+			CreateDirectory "$PROGRAMDATA\Mozilla\updates\$strTaskBarHash"
+			${If} ${FileExists} "$SettingsDirectory\update-config.json"
+				CopyFiles /SILENT "$SettingsDirectory\update-config.json" "$PROGRAMDATA\Mozilla\updates\$strTaskBarHash"
+			${EndIf}
+		${Else}
+			CreateDirectory "$PROGRAMDATA\Mozilla-1de4eec8-1241-4177-a864-e594e8d1fb38\updates\$strTaskBarHash"
+			${If} ${FileExists} "$SettingsDirectory\update-config.json"
+				CopyFiles /SILENT "$SettingsDirectory\update-config.json" "$PROGRAMDATA\Mozilla-1de4eec8-1241-4177-a864-e594e8d1fb38\updates\$strTaskBarHash"
+			${EndIf}
+		${EndIf}
 	
 		;=== Run locally if needed (aka Portable Firefox Live)
 		StrCmp $RUNLOCALLY "true" "" CompareProfilePath
@@ -840,13 +849,16 @@ Section "Main"
 		${RMDirIfNotJunction} "$LOCALAPPDATA\Mozilla\" ;=== Will only delete if empty (no /r switch)
 		${RMDirIfNotJunction} "$LOCALAPPDATALow\Mozilla\" ;=== Will only delete if empty (no /r switch)
 		
-		${If} ${FileExists} "$PROGRAMDATA\Mozilla\updates\$strTaskBarHash\update-config.json"
-			Delete "$SettingsDirectory\update-config.json"
-			CopyFiles /SILENT "$PROGRAMDATA\Mozilla\updates\$strTaskBarHash\update-config.json" "$SettingsDirectory"
-		${EndIf}
-		${If} ${FileExists} "$PROGRAMDATA\Mozilla-1de4eec8-1241-4177-a864-e594e8d1fb38\updates\$strTaskBarHash\update-config.json"
-			Delete "$SettingsDirectory\update-config.json"
-			CopyFiles /SILENT "$PROGRAMDATA\Mozilla-1de4eec8-1241-4177-a864-e594e8d1fb38\updates\$strTaskBarHash\update-config.json" "$SettingsDirectory"
+		${If} ${bolLegacyUpdate} == true
+			${If} ${FileExists} "$PROGRAMDATA\Mozilla\updates\$strTaskBarHash\update-config.json"
+				Delete "$SettingsDirectory\update-config.json"
+				CopyFiles /SILENT "$PROGRAMDATA\Mozilla\updates\$strTaskBarHash\update-config.json" "$SettingsDirectory"
+			${EndIf}
+		${Else}
+			${If} ${FileExists} "$PROGRAMDATA\Mozilla-1de4eec8-1241-4177-a864-e594e8d1fb38\updates\$strTaskBarHash\update-config.json"
+				Delete "$SettingsDirectory\update-config.json"
+				CopyFiles /SILENT "$PROGRAMDATA\Mozilla-1de4eec8-1241-4177-a864-e594e8d1fb38\updates\$strTaskBarHash\update-config.json" "$SettingsDirectory"
+			${EndIf}
 		${EndIf}
 		RMDir /r "$PROGRAMDATA\Mozilla\updates\$strTaskBarHash"
 		RMDir /r "$PROGRAMDATA\Mozilla\updates\$strCityHash"
