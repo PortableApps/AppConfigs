@@ -1,6 +1,8 @@
-﻿;Copyright 2004-2020 John T. Haller of PortableApps.com
+﻿!addplugindir /x86-unicode ".\Plugins"
 
-;Website: http://PortableApps.com/ThunderbirdPortable
+;Copyright 2004-2022 John T. Haller of PortableApps.com
+
+;Website: https://portableapps.com/apps/internet/thunderbird_portable
 
 ;This software is OSI Certified Open Source Software.
 ;OSI Certified is a certification mark of the Open Source Initiative.
@@ -26,12 +28,10 @@
 !define APPNAME "Thunderbird"
 !define NAME "ThunderbirdPortable"
 !define AppID "ThunderbirdPortable"
-!define VER "2.3.0.0"
-!define WEBSITE "PortableApps.com/ThunderbirdPortable"
+!define VER "2.7.0.0"
+!define WEBSITE "https://portableapps.com/apps/internet/thunderbird_portable"
 !define DEFAULTEXE "thunderbird.exe"
-!define DEFAULTAPPDIR "thunderbird"
-!define DEFAULTGPGPATH "gpg"
-!define DEFAULTGPGHOME "gpg"
+!define DEFAULTAPPDIR "Thunderbird"
 !define LAUNCHERLANGUAGE "English"
 
 ;=== Program Details
@@ -102,14 +102,13 @@ LoadLanguageFile "${NSISDIR}\Contrib\Language files\${LAUNCHERLANGUAGE}.nlf"
 !include PortableApps.comLauncherLANG_${LAUNCHERLANGUAGE}.nsh
 
 ;=== Variables
+Var PROGRAMDATA ;Missing system var
 Var PROGRAMDIRECTORY
 Var PROGRAMDIRECTORY64
 Var PROFILEDIRECTORY
 Var ORIGINALPROFILEDIRECTORY
 Var SETTINGSDIRECTORY
 Var PLUGINSDIRECTORY
-Var GPGPATHDIRECTORY
-Var GPGHOMEDIRECTORY
 Var ADDITIONALPARAMETERS
 Var ALLOWMULTIPLEINSTANCES
 Var SKIPCOMPREGFIX
@@ -130,12 +129,21 @@ Var bolLauncherIsAlreadyRunning
 Var bolAlwaysUse32Bit
 Var bolUsing64Bit
 Var strPassedParameters
+Var bolCrashReportsFolderExists
+Var bolCrashReportsKeyExists
+Var bolUpdatesLocalFolderExists
+Var strTaskBarID
+Var strTaskBarHash
+Var strCityHash
+
 ;=== START INTEGRITY CHECK 1.1 Var
 Var bolCustomIntegrityCheckStartUnsupported
 Var strCustomIntegrityCheckVersion
 ;=== END INTEGRITY CHECK
 
 Section .onInit
+	ExpandEnvStrings $PROGRAMDATA "%PROGRAMDATA%"
+
 	;=== START INTEGRITY CHECK 1.1 OnInit
 	;Check for improper install/upgrade without running the PA.c Installer which can cause issues
 	;Designed to not require ReadINIStrWithDefault which is not included in the PA.c Launcher code
@@ -233,12 +241,6 @@ Section "Main"
 		StrCpy $PROFILEDIRECTORY "$EXEDIR\$0"
 		${ReadINIStrWithDefault} $0 "$EXEDIR\${NAME}.ini" "${NAME}" "SettingsDirectory" "Data\settings"
 		StrCpy $SETTINGSDIRECTORY "$EXEDIR\$0"
-		${ReadINIStrWithDefault} $0 "$EXEDIR\${NAME}.ini" "${NAME}" "GPGPathDirectory" "App\${DEFAULTGPGPATH}"
-		StrCpy $GPGPATHDIRECTORY "$EXEDIR\$0"
-		${ReadINIStrWithDefault} $GPGPATHDIRECTORY "$EXEDIR\${NAME}.ini" "${NAME}" "GPGFullPath" "$GPGPATHDIRECTORY"
-		${ReadINIStrWithDefault} $0 "$EXEDIR\${NAME}.ini" "${NAME}" "GPGHomeDirectory" "Data\${DEFAULTGPGHOME}"
-		StrCpy $GPGHOMEDIRECTORY "$EXEDIR\$0"
-		${ReadINIStrWithDefault} $GPGHOMEDIRECTORY "$EXEDIR\${NAME}.ini" "${NAME}" "GPGHomeFullPath" "$GPGHOMEDIRECTORY"
 		${ReadINIStrWithDefault} $0 "$EXEDIR\${NAME}.ini" "${NAME}" "PluginsDirectory" "Data\plugins"
 		StrCpy $PLUGINSDIRECTORY "$EXEDIR\$0"
 		${ReadINIStrWithDefault} $ADDITIONALPARAMETERS "$EXEDIR\${NAME}.ini" "${NAME}" "AdditionalParameters" ""
@@ -266,12 +268,11 @@ Section "Main"
 			StrCmp $PROFILEDIRECTORY "$EXEDIR\Data\profile" "" EndINI
 			StrCmp $PLUGINSDIRECTORY "$EXEDIR\Data\plugins" "" EndINI
 			StrCmp $SETTINGSDIRECTORY "$EXEDIR\Data\settings" "" EndINI
-			StrCmp $GPGPATHDIRECTORY "$EXEDIR\App\${DEFAULTGPGPATH}" "" EndINI
-			StrCmp $GPGHOMEDIRECTORY "$EXEDIR\Data\${DEFAULTGPGHOME}" "" EndINI
 			StrCpy $ISDEFAULTDIRECTORY "true"
 	
 		EndINI:
-			IfFileExists "$PROGRAMDIRECTORY\$PROGRAMEXECUTABLE" FoundProgramEXE NoProgramEXE
+			IfFileExists "$PROGRAMDIRECTORY\$PROGRAMEXECUTABLE" FoundProgramEXE
+			IfFileExists "$PROGRAMDIRECTORY64\$PROGRAMEXECUTABLE" FoundProgramEXE NoProgramEXE
 
 	NoINI:
 		;=== No INI file, so we'll use the defaults
@@ -283,14 +284,15 @@ Section "Main"
 		StrCpy $DISABLESPLASHSCREEN "false"
 		StrCpy $DISABLEINTELLIGENTSTART "false"
 
-		IfFileExists "$EXEDIR\App\${DEFAULTAPPDIR}\${DEFAULTEXE}" "" NoProgramEXE
+		${IfNot} ${FileExists} "$EXEDIR\App\${DEFAULTAPPDIR}\${DEFAULTEXE}"
+		${AndIfNot} ${FileExists} "$EXEDIR\App\${DEFAULTAPPDIR}64\${DEFAULTEXE}" 
+			Goto NoProgramEXE
+		${EndIf}
 			StrCpy $PROGRAMDIRECTORY "$EXEDIR\App\${DEFAULTAPPDIR}"
 			StrCpy $PROGRAMDIRECTORY64 "$EXEDIR\App\${DEFAULTAPPDIR}64"
 			StrCpy $PROFILEDIRECTORY "$EXEDIR\Data\profile"
 			StrCpy $PLUGINSDIRECTORY "$EXEDIR\Data\plugins"
 			StrCpy $SETTINGSDIRECTORY "$EXEDIR\Data\settings"
-			StrCpy $GPGPATHDIRECTORY "$EXEDIR\App\${DEFAULTGPGPATH}"
-			StrCpy $GPGHOMEDIRECTORY "$EXEDIR\Data\${DEFAULTGPGHOME}"
 			StrCpy $ISDEFAULTDIRECTORY "true"
 			StrCpy $bolAlwaysUse32Bit false
 			Goto FoundProgramEXE
@@ -326,10 +328,8 @@ Section "Main"
 		CreateDirectory "$EXEDIR\Data"
 		CreateDirectory "$EXEDIR\Data\plugins"
 		CreateDirectory "$EXEDIR\Data\profile"
-		CreateDirectory "$EXEDIR\Data\gpg"
 		CopyFiles /SILENT $EXEDIR\App\DefaultData\plugins\*.* $EXEDIR\Data\plugins
 		CopyFiles /SILENT $EXEDIR\App\DefaultData\profile\*.* $EXEDIR\Data\profile
-		CopyFiles /SILENT $EXEDIR\App\DefaultData\gpg\*.* $EXEDIR\Data\gpg
 		IfFileExists "$EXEDIR\Data\settings\ThunderbirdPortableSettings.ini" ProfileFound
 			CreateDirectory "$EXEDIR\Data\settings"
 			CopyFiles /SILENT $EXEDIR\App\DefaultData\settings\*.* $EXEDIR\Data\settings
@@ -381,14 +381,30 @@ Section "Main"
 			newadvsplash::show /NOUNLOAD 2000 0 0 -1 /L $PLUGINSDIR\splash.jpg
 
 	SkipSplashScreen:
+		${ReadINIStrWithDefault} $strTaskBarHash "$EXEDIR\App\AppInfo\appinfo.ini" "Details" "AppID" "ThunderbirdPortable"
+		CreateDirectory "$PROGRAMDATA\Mozilla\updates\$strTaskBarHash"
+		${If} ${FileExists} "$SettingsDirectory\update-config.json"
+			CopyFiles /SILENT "$SettingsDirectory\update-config.json" "$PROGRAMDATA\Mozilla\updates\$strTaskBarHash"
+		${EndIf}	
+		${registry::KeyExists} "HKCU\Software\Thunderbird\Crash Reporter" $R0
+		${If} $R0 != "-1"
+			StrCpy $bolCrashReportsKeyExists true
+		${EndIf}
+	
+		${If} ${FileExists} "$APPDATA\Thunderbird\Crash Reports\*.*"
+			StrCpy $bolCrashReportsFolderExists true
+		${EndIf}
+	
+		${If} ${FileExists} "$LOCALAPPDATA\Thunderbird\updates\*.*"
+			StrCpy $bolUpdatesLocalFolderExists true
+		${EndIf}
+	
 		;=== Run locally if needed (aka Portable Thunderbird Live)
 		StrCmp $RUNLOCALLY "true" "" CompareProfilePath
 			RMDir /r "$PLUGINSDIR\${NAME}\"
 			CreateDirectory $PLUGINSDIR\${NAME}\profile
 			CreateDirectory $PLUGINSDIR\${NAME}\plugins
 			CreateDirectory $PLUGINSDIR\${NAME}\program
-			CreateDirectory $PLUGINSDIR\${NAME}\gpghome
-			CreateDirectory $PLUGINSDIR\${NAME}\gpgpath
 			CreateDirectory $PLUGINSDIR\${NAME}\registry
 			CopyFiles /SILENT $PROFILEDIRECTORY\*.* $PLUGINSDIR\${NAME}\profile
 			StrCpy $PROFILEDIRECTORY $PLUGINSDIR\${NAME}\profile
@@ -396,10 +412,6 @@ Section "Main"
 			StrCpy $PLUGINSDIRECTORY $PLUGINSDIR\${NAME}\plugins
 			CopyFiles /SILENT $PROGRAMDIRECTORY\*.* $PLUGINSDIR\${NAME}\program
 			StrCpy $PROGRAMDIRECTORY $PLUGINSDIR\${NAME}\PLUGINSDIR
-			CopyFiles /SILENT $GPGPATHDIRECTORY\*.* $PLUGINSDIR\${NAME}\gpgpath
-			StrCpy $GPGPATHDIRECTORY $PLUGINSDIR\${NAME}\gpgpath
-			CopyFiles /SILENT $GPGHOMEDIRECTORY\*.* $PLUGINSDIR\${NAME}\gpghome
-			StrCpy $GPGHOMEDIRECTORY $PLUGINSDIR\${NAME}\gpghome
 			${SetFileAttributesDirectoryNormal} "$PLUGINSDIR\${NAME}"
 
 	CompareProfilePath:
@@ -465,6 +477,44 @@ Section "Main"
 			${WordReplace} $0 "\" "/" "+" $2
 			${WordReplace} $1 "\" "/" "+" $3
 			${ReplaceInFile} "$PROFILEDIRECTORY\prefs.js" "file:///$2" "file:///$3"
+			
+			${WordReplace} $0 "\" "\\" "+" $2
+			${WordReplace} $1 "\" "\\" "+" $3
+			${ReplaceInFile} "$PROFILEDIRECTORY\prefs.js" `"$2\\` `"$3\\`
+			
+			${GetParent} $0 $2
+			${GetParent} $1 $3
+			${If} $2 != ""
+			${AndIf} $3 != ""
+				${WordReplace} $2 "\" "/" "+" $2
+				${WordReplace} $3 "\" "/" "+" $3
+				${ReplaceInFile} "$PROFILEDIRECTORY\prefs.js" "file:///$2" "file:///$3"
+				
+				${GetParent} $0 $2
+				${GetParent} $1 $3
+				${WordReplace} $2 "\" "\\" "+" $2
+				${WordReplace} $3 "\" "\\" "+" $3
+				${ReplaceInFile} "$PROFILEDIRECTORY\prefs.js" `"$2\\` `"$3\\`
+				
+				${GetParent} $0 $2
+				${GetParent} $1 $3
+				${GetParent} $2 $2
+				${GetParent} $3 $3
+				${If} $2 != ""
+				${AndIf} $3 != ""
+					${WordReplace} $2 "\" "/" "+" $2
+					${WordReplace} $3 "\" "/" "+" $3
+					${ReplaceInFile} "$PROFILEDIRECTORY\prefs.js" "file:///$2" "file:///$3"
+					
+					${GetParent} $0 $2
+					${GetParent} $1 $3
+					${GetParent} $2 $2
+					${GetParent} $3 $3
+					${WordReplace} $2 "\" "\\" "+" $2
+					${WordReplace} $3 "\" "\\" "+" $3
+					${ReplaceInFile} "$PROFILEDIRECTORY\prefs.js" `"$2\\` `"$3\\`
+				${EndIf}
+			${EndIf}
 		${EndIf}
 		${If} ${FileExists} "$PROFILEDIRECTORY\extensions.json"
 			${WordReplace} $0 "\" "\\" "+" $2
@@ -532,19 +582,30 @@ Section "Main"
 		${AndIf} ${AtLeastWin7}
 		${AndIf} $bolAlwaysUse32Bit == false
 			StrCpy $EXECSTRING `"$PROGRAMDIRECTORY64\$PROGRAMEXECUTABLE" -profile "$PROFILEDIRECTORY"`
+			StrCpy $strTaskBarID "$PROGRAMDIRECTORY64"
+			CityHash::GetCityHash64 "$PROGRAMDIRECTORY64"
+			Pop $strCityHash
 			StrCpy $bolUsing64Bit true
 		${Else}
 			StrCpy $EXECSTRING `"$PROGRAMDIRECTORY\$PROGRAMEXECUTABLE" -profile "$PROFILEDIRECTORY"`
-			StrCpy $bolUsing64Bit true
+			StrCpy $strTaskBarID "$PROGRAMDIRECTORY"
+			CityHash::GetCityHash64 "$PROGRAMDIRECTORY"
+			Pop $strCityHash
+			StrCpy $bolUsing64Bit false
 		${EndIf}
 		
 		${If} $strPassedParameters != ''
 			StrCpy $EXECSTRING `$EXECSTRING $strPassedParameters`
 		${EndIf}
+		;${registry::Write} "HKCU\SOFTWARE\Mozilla\Thunderbird\TaskBarIDs" "$strTaskBarID" "$strTaskBarID\thunderbird.exe" "REG_SZ" $R1
+		${registry::Write} "HKCU\SOFTWARE\Mozilla\Thunderbird\TaskBarIDs" "$strTaskBarID" "$strTaskBarHash" "REG_SZ" $R1
 
 	;CheckMultipleInstances:
 		StrCmp $ALLOWMULTIPLEINSTANCES "true" "" AdditionalParameters
-		StrCpy $EXECSTRING `$EXECSTRING -no-remote`
+		${IfNot} ${FileExists} "$PROFILEDIRECTORY\webappsstore.sqlite-wal"
+		${AndIf} ${ProcessExists} "thunderbird.exe"
+			StrCpy $EXECSTRING `$EXECSTRING -new-instance`
+		${EndIf}
 
 	AdditionalParameters:
 		StrCmp $ADDITIONALPARAMETERS "" PluginsEnvironment
@@ -593,52 +654,9 @@ Section "Main"
 			${EndIf}
 		${EndIf}
 		
-		StrCmp $PLUGINSDIRECTORY "" GPGEnvironment
+		StrCmp $PLUGINSDIRECTORY "" LaunchNow
 			System::Call 'Kernel32::SetEnvironmentVariable(t, t) i("MOZ_PLUGIN_PATH", "$PLUGINSDIRECTORY").r0'
-		
-	GPGEnvironment:
-		;=== Check for shared GPG install in CommonFiles
-		${GetParent} $EXEDIR $3 ;This is the PortableAppsPath
-
-		${If} $3 != "" ;Be sure we didn't just GetParent on Root
-			${If} ${FileExists} "$3\CommonFiles\GPG\gpg2.exe"
-			${OrIf} ${FileExists} "$3\CommonFiles\GPG\bin\gpg.exe"
-				StrCpy $GPGPATHDIRECTORY "$3\CommonFiles\GPG"
-			${EndIf}
-		${EndIf}
-
-		;=== Set the GPG Environment if the files are present
-		${If} ${FileExists} "$GPGPATHDIRECTORY\gpg.exe"
-		${OrIf} ${FileExists} "$GPGPATHDIRECTORY\gpg2.exe"
-		${OrIf} ${FileExists} "$GPGPATHDIRECTORY\bin\gpg.exe"
-
-			;=== Setup the Path so that gpg.exe can be found by Enigmail
-			ReadEnvStr $R0 "PATH"
-			StrCpy $R0 "$GPGPATHDIRECTORY;$GPGPATHDIRECTORY\bin;$R0"
-			System::Call 'Kernel32::SetEnvironmentVariable(t, t) i("PATH", "$R0").r0'
-
-			;=== Setup GNUPGHOME so that we don't have to use the registry
-			StrCpy $R0 "$GPGHOMEDIRECTORY"
-			System::Call 'Kernel32::SetEnvironmentVariable(t, t) i("GNUPGHOME", "$R0").r0'
-			
-			IfFileExists "$PROFILEDIRECTORY\prefs.js" "" LaunchNow
-				FileOpen $0 "$PROFILEDIRECTORY\prefs.js" a
-				FileSeek $0 0 END
-				FileWriteByte $0 "13"
-				FileWriteByte $0 "10"
-				${If} ${FileExists} "$GPGPATHDIRECTORY\gpg.exe"
-					${WordReplace} "$GPGPATHDIRECTORY\gpg.exe" "\" "\\" "+" $1
-				${ElseIf} ${FileExists} "$GPGPATHDIRECTORY\gpg2.exe"
-					${WordReplace} "$GPGPATHDIRECTORY\gpg2.exe" "\" "\\" "+" $1
-				${ElseIf} ${FileExists} "$GPGPATHDIRECTORY\bin\gpg.exe"
-					${WordReplace} "$GPGPATHDIRECTORY\bin\gpg.exe" "\" "\\" "+" $1
-				${EndIf}
-				FileWrite $0 `user_pref("extensions.enigmail.agentPath", "$1");`
-				FileWriteByte $0 "13"
-				FileWriteByte $0 "10"
-				FileClose $0
-		${EndIf}
-		
+	
 	LaunchNow:
 		StrCmp $ALLOWMULTIPLEINSTANCES "true" StartProgramNow
 		StrCmp $SECONDARYLAUNCH "true" StartProgramAndExit
@@ -736,6 +754,21 @@ Section "Main"
 		RMDir /r "$PLUGINSDIR\${NAME}\"
 
 	TheRealEnd:
+		${If} $bolCrashReportsKeyExists != true
+			${registry::DeleteKey} "HKCU\Software\Thunderbird\Crash Reporter" $R0
+		${EndIf}
+		${registry::DeleteKeyEmpty} "HKCU\Software\Thunderbird" $R0
+		DeleteRegValue HKCU "SOFTWARE\Mozilla\Thunderbird\TaskBarIDs" "$strTaskBarID"
+		${registry::DeleteKeyEmpty} "HKCU\Software\Mozilla\Thunderbird\TaskBarIDs" $R0
+		DeleteRegValue HKCU "SOFTWARE\Thunderbird\DllPrefetchExperiment" "$PROGRAMDIRECTORY\$PROGRAMEXECUTABLE"
+		${registry::DeleteKeyEmpty} "HKCU\Software\Thunderbird\DllPrefetchExperiment" $R0
+		DeleteRegValue HKCU "SOFTWARE\Thunderbird\Launcher" "$PROGRAMDIRECTORY\$PROGRAMEXECUTABLE|Telemetry"
+		${registry::DeleteKeyEmpty} "HKCU\Software\Thunderbird\Launcher" $R0
+		${registry::DeleteKeyEmpty} "HKCU\Software\Mozilla\Thunderbird" $R0
+		${registry::DeleteKeyEmpty} "HKCU\Software\Mozilla" $R0
+		${registry::DeleteKeyEmpty} "HKCU\Software\Thunderbird" $R0
+		
+		${RMDirIfNotJunction} "$APPDATA\Mozilla\SystemExtensionsDev" ;=== Will only delete if empty (no /r switch)
 		${RMDirIfNotJunction} "$APPDATA\Mozilla\Extensions" ;=== Will only delete if empty (no /r switch)
 		${RMDirIfNotJunction} "$APPDATA\Mozilla\" ;=== Will only delete if empty (no /r switch)
 		RMDir /r "$APPDATA\Thunderbird\Crash Reports"
@@ -743,20 +776,57 @@ Section "Main"
 		RMDir "$APPDATA\Thunderbird\Pending Pings\" ;=== Will only delete if empty (no /r switch)
 		${RMDirIfNotJunction} "$APPDATA\Thunderbird\Profiles\" ;=== Will only delete if empty (no /r switch)
 		${RMDirIfNotJunction} "$APPDATA\Thunderbird\Profile\" ;=== Will only delete if empty (no /r switch)
+		${If} $bolCrashReportsFolderExists != true
+			RMDir /r "$APPDATA\Thunderbird\Crash Reports"
+		${Else}		
+			${RMDirIfNotJunction} "$APPDATA\Thunderbird\Crash Reports\events\" ;=== Will only delete if empty (no /r switch)
+			${RMDirIfNotJunction} "$APPDATA\Thunderbird\Crash Reports\" ;=== Will only delete if empty (no /r switch)
+		${EndIf}
 		${RMDirIfNotJunction} "$APPDATA\Thunderbird\" ;=== Will only delete if empty (no /r switch)
 		${RMDirIfNotJunction} "$LOCALAPPDATA\gnupg\" ;=== Will only delete if empty (no /r switch)
 		${RMDirIfNotJunction} "$LOCALAPPDATA\Mozilla\Extensions\" ;=== Will only delete if empty (no /r switch)
+		
+		${If} ${FileExists} "$PROGRAMDATA\Mozilla\updates\$strTaskBarHash\update-config.json"
+			Delete "$SettingsDirectory\update-config.json"
+			CopyFiles /SILENT "$PROGRAMDATA\Mozilla\updates\$strTaskBarHash\update-config.json" "$SettingsDirectory"
+		${EndIf}
+		${If} ${FileExists} "$PROGRAMDATA\Mozilla-1de4eec8-1241-4177-a864-e594e8d1fb38\updates\$strTaskBarHash\update-config.json"
+			Delete "$SettingsDirectory\update-config.json"
+			CopyFiles /SILENT "$PROGRAMDATA\Mozilla-1de4eec8-1241-4177-a864-e594e8d1fb38\updates\$strTaskBarHash\update-config.json" "$SettingsDirectory"
+		${EndIf}
+		RMDir /r "$PROGRAMDATA\Mozilla\updates\$strTaskBarHash"
+		RMDir /r "$PROGRAMDATA\Mozilla\updates\$strCityHash"
+		RMDir /r "$PROGRAMDATA\Mozilla-1de4eec8-1241-4177-a864-e594e8d1fb38\updates\$strTaskBarHash"
+		RMDir /r "$PROGRAMDATA\Mozilla-1de4eec8-1241-4177-a864-e594e8d1fb38\updates\$strCityHash"
+		${RMDirIfNotJunction} "$PROGRAMDATA\Mozilla\updates"
+		${RMDirIfNotJunction} "$PROGRAMDATA\Mozilla-1de4eec8-1241-4177-a864-e594e8d1fb38\updates"
+		Delete "$PROGRAMDATA\Mozilla\profile_count_$strTaskBarHash.json"
+		Delete "$PROGRAMDATA\Mozilla\profile_count_$strCityHash.json"
+		Delete "$PROGRAMDATA\Mozilla\uninstall_ping_$strTaskBarHash_*.json"
+		Delete "$PROGRAMDATA\Mozilla\UpdateLock-$strCityHash"
+		Delete "$PROGRAMDATA\Mozilla\UpdateLock-$strTaskBarHash"
+		Delete "$PROGRAMDATA\Mozilla-1de4eec8-1241-4177-a864-e594e8d1fb38\profile_count_$strTaskBarHash.json"
+		Delete "$PROGRAMDATA\Mozilla-1de4eec8-1241-4177-a864-e594e8d1fb38\profile_count_$strCityHash.json"
+		Delete "$PROGRAMDATA\Mozilla-1de4eec8-1241-4177-a864-e594e8d1fb38\uninstall_ping_$strTaskBarHash_*.json"
+		Delete "$PROGRAMDATA\Mozilla-1de4eec8-1241-4177-a864-e594e8d1fb38\UpdateLock-$strCityHash"
+		Delete "$PROGRAMDATA\Mozilla-1de4eec8-1241-4177-a864-e594e8d1fb38\UpdateLock-$strTaskBarHash"
+		${RMDirIfNotJunction} "$PROGRAMDATA\Mozilla"
+		${RMDirIfNotJunction} "$PROGRAMDATA\Mozilla-1de4eec8-1241-4177-a864-e594e8d1fb38"
+		RMDir /r "$PROGRAMDATA\UpdateLock-$strCityHash"
+		Delete "$PROGRAMDATA\UpdateLock-$strCityHash"
+		
 		${RMDirIfNotJunction} "$LOCALAPPDATA\Mozilla\updates" ;=== Will only delete if empty (no /r switch)
 		${RMDirIfNotJunction} "$LOCALAPPDATA\Mozilla\" ;=== Will only delete if empty (no /r switch)
-		RMDir "$LOCALAPPDATA\Thunderbird\thunderbird\updates\0" ;=== Will only delete if empty (no /r switch)
-		RMDir "$LOCALAPPDATA\Thunderbird\thunderbird\updates" ;=== Will only delete if empty (no /r switch)
-		RMDir "$LOCALAPPDATA\Thunderbird\thunderbird" ;=== Will only delete if empty (no /r switch)
+		
+		${If} $bolUpdatesLocalFolderExists != true
+			RMDir /r "$LOCALAPPDATA\Thunderbird\updates" 
+		${Else}
+			${RMDirIfNotJunction} "$LOCALAPPDATA\Thunderbird\thunderbird\updates\0" ;=== Will only delete if empty (no /r switch)
+			${RMDirIfNotJunction} "$LOCALAPPDATA\Thunderbird\thunderbird\updates" ;=== Will only delete if empty (no /r switch)
+		${EndIf}
+		${RMDirIfNotJunction} "$LOCALAPPDATA\Thunderbird\thunderbird" ;=== Will only delete if empty (no /r switch)
 		${RMDirIfNotJunction} "$LOCALAPPDATA\Thunderbird\" ;=== Will only delete if empty (no /r switch)
 		${RMDirIfNotJunction} "$LOCALAPPDATALow\Mozilla\" ;=== Will only delete if empty (no /r switch)
-		
-		${If} ${FileExists} "$GPGPATHDIRECTORY\GPGShutdown.exe"
-			ExecWait "$GPGPATHDIRECTORY\GPGShutdown.exe"
-		${EndIf}
 		
 	TheRealEnd2:
 		${registry::Unload}
