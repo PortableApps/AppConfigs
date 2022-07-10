@@ -55,8 +55,22 @@ ${Segment.OnInit}
 	System::Call kernel32::IsWow64Process(is,*i.r0)
 	${If} $0 == 0
 		StrCpy $Bits 32
+		${If} ${FileExists} "$EXEDIR\App\IrfanView64\Html\*.*"
+			Rename "$EXEDIR\App\IrfanView64\Html" "$EXEDIR\App\IrfanView\Html"
+			Rename "$EXEDIR\App\IrfanView64\Languages" "$EXEDIR\App\IrfanView\Languages"
+			Rename "$EXEDIR\App\IrfanView64\Toolbars" "$EXEDIR\App\IrfanView\Toolbars"
+			CopyFiles /SILENT "$EXEDIR\App\IrfanView64\*.chm" "$EXEDIR\App\IrfanView"
+			Delete "$EXEDIR\App\IrfanView64\*.chm"
+		${EndIf}
 	${Else}
 		StrCpy $Bits 64
+		${If} ${FileExists} "$EXEDIR\App\IrfanView\Html\*.*"
+			Rename "$EXEDIR\App\IrfanView\Html" "$EXEDIR\App\IrfanView64\Html"
+			Rename "$EXEDIR\App\IrfanView\Languages" "$EXEDIR\App\IrfanView64\Languages"
+			Rename "$EXEDIR\App\IrfanView\Toolbars" "$EXEDIR\App\IrfanView64\Toolbars"
+			CopyFiles /SILENT "$EXEDIR\App\IrfanView\*.chm" "$EXEDIR\App\IrfanView64"
+			Delete "$EXEDIR\App\IrfanView\*.chm"
+		${EndIf}
 	${EndIf}
 	
 	StrCpy $0 $Bits
