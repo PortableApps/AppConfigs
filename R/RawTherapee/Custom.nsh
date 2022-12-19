@@ -1,8 +1,24 @@
 ${SegmentFile}
 
+${Segment.OnInit}
+	; Borrowed the following from PAL 2.2, Remove on release of PAL 2.2
+		; Work out if it's 64-bit or 32-bit
+	System::Call kernel32::GetCurrentProcess()i.s
+	System::Call kernel32::IsWow64Process(is,*i.r0)
+	${If} $0 == 0
+		StrCpy $Bits 32
+	${Else}
+		StrCpy $Bits 64
+	${EndIf}
+	${If} ${IsWinXP}
+	${OrIf} ${IsWinVista}
+		StrCpy $Bits 32
+	${EndIf}
+!macroend
+
 ${SegmentInit}
-    ${If} ${IsWinXP}
-	${AndIf} $Bits == 64
+	${If} ${IsWinXP}
+	${OrIf} ${IsWinVista}
 		StrCpy $Bits 32
 	${EndIf}
     ${If} $Bits = 64
