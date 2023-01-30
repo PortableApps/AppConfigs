@@ -1,15 +1,10 @@
 ${SegmentFile}
 
-${SegmentInit}
-    ${If} $Bits = 64
-		${If} ${FileExists} "$EXEDIR\App\CrystalDiskInfo\DiskInfo64.exe"
-			Rename "$EXEDIR\App\CrystalDiskInfo\DiskInfo.exe" "$EXEDIR\App\CrystalDiskInfo\DiskInfo32.exe"
-			Rename "$EXEDIR\App\CrystalDiskInfo\DiskInfo64.exe" "$EXEDIR\App\CrystalDiskInfo\DiskInfo.exe"
-		${EndIf}
-	${Else}
-		${If} ${FileExists} "$EXEDIR\App\CrystalDiskInfo\DiskInfo32.exe"
-			Rename "$EXEDIR\App\CrystalDiskInfo\DiskInfo.exe" "$EXEDIR\App\CrystalDiskInfo\DiskInfo64.exe"
-			Rename "$EXEDIR\App\CrystalDiskInfo\DiskInfo32.exe" "$EXEDIR\App\CrystalDiskInfo\DiskInfo.exe"
-		${EndIf}
-    ${EndIf}
+${SegmentPre}
+	ReadRegStr $0 HKLM "HARDWARE\DESCRIPTION\System" "Identifier"
+	StrCpy $1 $0 3 0
+		
+	${If} $1 == "ARM"
+		${ReadLauncherConfig} $ProgramExecutable Launch ProgramExecutableARM64
+	${EndIf}
 !macroend
