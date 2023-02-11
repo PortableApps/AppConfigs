@@ -1,6 +1,21 @@
 ${SegmentFile}
 
 ${SegmentInit}
+	ReadRegStr $0 HKLM "Software\Microsoft\Windows NT\CurrentVersion" "CurrentBuild"
+
+	${If} $0 < 10000 ;Windows 7/8/8.1
+		${If} ${FileExists} "$EXEDIR\App\TransmissionLegacy"
+			Rename "$EXEDIR\App\Transmission" "$EXEDIR\App\TransmissionModern"
+			Rename "$EXEDIR\App\TransmissionLegacy" "$EXEDIR\App\Transmission"
+		${EndIf}
+	${Else}
+		${If} ${FileExists} "$EXEDIR\App\TransmissionModern"
+			Rename "$EXEDIR\App\Transmission" "$EXEDIR\App\TransmissionLegacy"
+			Rename "$EXEDIR\App\TransmissionModern" "$EXEDIR\App\Transmission"
+		${EndIf}
+	${EndIf}
+	
+
 	ExpandEnvStrings $1 "%PortableApps.comDocuments%"
 	${If} $1 == ""
 	${OrIfNot} ${FileExists} "$1\*.*"
