@@ -3,11 +3,21 @@ ${SegmentFile}
 ${SegmentPostPrimary}
 	ReadINIStr $R0 "$EXEDIR\Data\settings\NVDAPortableSettings.ini" "NVDAPortableSettings" "IgnoreLockedFiles"
 	${If} $R0 != "true"
-		${If} $Bits == 64
-			StrCpy $0 "$EXEDIR\App\NVDA\lib64\2021.3.3"
+		StrCpy $3 "2023.1" ;Current App version in path
+	
+		ReadRegStr $0 HKLM "HARDWARE\DESCRIPTION\System" "Identifier"
+		StrCpy $1 $0 3 0
+		
+		${If} $1 == "ARM"
+			StrCpy $0 "$EXEDIR\App\NVDA\libArm64\$3"
 		${Else}
-			StrCpy $0 "$EXEDIR\App\NVDA\lib\2021.3.3"
+			${If} $Bits == 64
+				StrCpy $0 "$EXEDIR\App\NVDA\lib64\$3"
+			${Else}
+				StrCpy $0 "$EXEDIR\App\NVDA\lib\$3"
+			${EndIf}
 		${EndIf}
+		
 		CopyFiles /SILENT "$0\IAccessible2proxy.dll" "$0\temp\IAccessible2proxy.dll"
 		Delete "$0\IAccessible2proxy.dll"
 		${IfNot} ${FileExists} "$0\IAccessible2proxy.dll"
