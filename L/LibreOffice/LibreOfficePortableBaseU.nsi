@@ -20,7 +20,7 @@
 ;Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 !define NAME "LibreOfficeBasePortable"
-!define FRIENDLYNAME "LibreOffice  Base Portable"
+!define FRIENDLYNAME "LibreOffice Base Portable"
 !define APP "LibreOfficeBase"
 !define VER "2.0.0.0"
 !define WEBSITE "PortableApps.com/LibreOfficePortable"
