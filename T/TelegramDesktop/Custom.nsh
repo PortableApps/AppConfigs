@@ -11,6 +11,7 @@ ${SegmentPrePrimary}
 		MessageBox MB_ICONINFORMATION|MB_OK "IMPORTANT ACCOUNT PORTABILITY NOTE!$\r$\n$\r$\nBy default, Telegram will store your local account media on the local machine and leave it behind on exit.  To ensure it is not left behind, after you create/login to your account, click Menu, Settings, Advanced, click Default Folder and select 'Temp Folder, cleared on logout...' and then click Save. This will ensure your synced data is not left behind as you move PCs."		
 		StrCpy $CustomFirstRunDone true
 	${EndIf}
+	Delete "$EXEDIR\App\Telegram\log_*.txt"
 !macroend
 ${SegmentPostPrimary}
 	Delete "$SMPROGRAMS\Telegram.lnk"
