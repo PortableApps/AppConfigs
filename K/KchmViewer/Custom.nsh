@@ -1,38 +1,27 @@
 ${SegmentFile}
 
-!macro _PreExecPrimary_RegMultiSzReplaceDriveLetter
-
-# Code courtesy of Bart.S, OpenPlatform, and 3D1T0R
-${Registry::Read} "$RegKey" "$RegValue" $R0 $R1
-StrLen $1 $R0
-${If} $R1 == "REG_MULTI_SZ"
-${AndIf} $1 > 3 ; Test for empty value
-	; Unfortunately the Registry::Read function puts a NewLine ($\n) between every character, this hack removes those while preserving NewLine ($\n) Characters which were supposed to be present
-	; If we could fix Registry::Read we could remove the next 3 lines
-	${WordReplace} $R0 "$\n$\n$\n" "/NEWLINE\" "+" $R2
-	${WordReplace} $R2 "$\n" "" "+" $R2
-	${WordReplace} $R2 "/NEWLINE\" "$\n" "+" $R2
-#	${DebugMsg} "Reading from Registry:$\nRegistry Key:$\n$RegKey$\nRegistry Value:$\n$RegValue$\nContents:$\n$R2$\nAnd is Type:$\n$R1"
-	${WordReplace} $R2 "$CustomLastDrive" "$CustomDrive" "+" $R3
-#	${DebugMsg} "Replacing the LastDrive letter with the current Drive letter:$\nString begins as:$R2$\nString to find:$\n$LastDrive$\nString to replace with:$\n$Drive$\nResultant String:$\n$R3"
-	${registry::Write} "$RegKey" "$RegValue" $R3 $R1 $R4
-#	${DebugMsg} "Writing to Registry:$\nRegistry Key:$RegKey$\nRegistry Value:$\n$RegValue$\nContents:$\n$R5$\nAnd is Type:$\n$R1$\n$\n$R3$\nDid it work (0=Yes -1=Error):$\n$R4"
-${Else}
-#	${DebugMsg} "$RegValue in $RegKey is empty."
-${EndIf}
-!macroend
-
-Var CustomLastDrive
-Var CustomDrive
-Var RegKey
-Var RegValue
-
 ${SegmentPreExecPrimary}
+	;Code with help from Bart.S, OpenPlatform, and 3D1T0R
+	${Registry::Read} "HKCU\Software\Ulduzsoft\kchmviewer" "recentFileList" $R0 $R1
+	StrLen $R2 $R0
+	${If} $R1 == "REG_MULTI_SZ"
+	${AndIf} $R2 > 3 ;Ensure a populated REG_MULTI_SZ
+		;Replace newling between characters while preserving actual new lines
+		${WordReplace} $R0 "$\n$\n$\n" "/NEWLINE\" "+" $R2
+		${WordReplace} $R2 "$\n" "" "+" $R2
+		${WordReplace} $R2 "/NEWLINE\" "$\n" "+" $R2
 
-	ReadEnvStr $CustomLastDrive "PAL:LastDrive"
-	ReadEnvStr $CustomDrive "PAL:Drive"
-
-	StrCpy $RegKey "HKEY_CURRENT_USER\Software\Ulduzsoft\kchmviewer"
-	StrCpy $RegValue "recentFileList"
-	!insertmacro _PreExecPrimary_RegMultiSzReplaceDriveLetter
+		ExpandEnvStrings $4 "%PAL:LastDrive%"
+		ExpandEnvStrings $5 "%PAL:Drive%"
+		ExpandEnvStrings $2 "%PAL:LastPortableAppsBaseDir:ForwardSlash%"
+		ExpandEnvStrings $3 "%PAL:PortableAppsBaseDir:ForwardSlash%"
+		ExpandEnvStrings $6 "%PAL:LastDrive%%PAL:LastPackagePartialDir:ForwardSlash%"
+		ExpandEnvStrings $7 "%PAL:Drive%%PAL:PackagePartialDir:ForwardSlash%"
+	
+		${WordReplace} $R2 "$6/" "$7/" "+" $R2
+		${WordReplace} $R2 "$2/" "$3/" "+" $R2
+		${WordReplace} $R2 "$4/" "$5/" "+" $R2
+		
+		${registry::Write} "HKCU\Software\Ulduzsoft\kchmviewer" "recentFileList" $R2 "REG_MULTI_SZ" $R9
+	${EndIf}
 !macroend
