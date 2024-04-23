@@ -30,18 +30,18 @@ ${SegmentPrePrimary}
 	${EndIf}
 	
 	;Disable or enable internal Opera updater if run or not run from PortableApps.com Platform
-	ReadEnvStr $0 "CustomCodeOperaVersion"
-	${If} $1 == ""
-		;Platform not running
-		${If} ${FileExists} "$EXEDIR\App\OperaGX\$0\opera_autoupdate.exe.disabled"
-			Rename "$EXEDIR\App\OperaGX\$0\opera_autoupdate.exe.disabled" "$EXEDIR\App\OperaGX\$0\opera_autoupdate.exe"
-		${EndIf}
-	${Else}
-		;Platform running
-		${If} ${FileExists} "$EXEDIR\App\OperaGX\$0\opera_autoupdate.exe"
-			Rename "$EXEDIR\App\OperaGX\$0\opera_autoupdate.exe" "$EXEDIR\App\OperaGX\$0\opera_autoupdate.exe.disabled"
-		${EndIf}
-	${EndIf}
+	;ReadEnvStr $0 "CustomCodeOperaVersion"
+	;${If} $1 == ""
+	;	;Platform not running
+	;	${If} ${FileExists} "$EXEDIR\App\OperaGX\$0\opera_autoupdate.exe.disabled"
+	;		Rename "$EXEDIR\App\OperaGX\$0\opera_autoupdate.exe.disabled" "$EXEDIR\App\OperaGX\$0\opera_autoupdate.exe"
+	;	${EndIf}
+	;${Else}
+	;	;Platform running
+	;	${If} ${FileExists} "$EXEDIR\App\OperaGX\$0\opera_autoupdate.exe"
+	;		Rename "$EXEDIR\App\OperaGX\$0\opera_autoupdate.exe" "$EXEDIR\App\OperaGX\$0\opera_autoupdate.exe.disabled"
+	;	${EndIf}
+	;${EndIf}
 	
 	${If} ${FileExists} "$EXEDIR\App\OperaGX\profile\data\*.*"
 		${If} ${FileExists} "$EXEDIR\Data\profile\*.*"
@@ -71,4 +71,11 @@ ${SegmentPrePrimary}
 			${EndIf}
 		${EndIf}
 	${EndIf}
+!macroend
+
+${SegmentPost}
+	RMDir /r "$EXEDIR\App\OperaGX\profile\data\Crash Reports"
+	Delete "$EXEDIR\App\OperaGX\profile\data\BU_Shutdown"
+	RMDir "$EXEDIR\App\OperaGX\profile\data"
+	RMDir "$EXEDIR\App\OperaGX\profile"
 !macroend
