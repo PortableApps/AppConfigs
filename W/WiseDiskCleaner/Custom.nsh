@@ -1,5 +1,15 @@
 ${SegmentFile}
 
+${SegmentInit}
+	${If} $Bits = 64
+		${SetEnvironmentVariablesPath} FullAppDir "$EXEDIR\App\WiseDiskCleaner"
+		Rename "$EXEDIR\App\WiseDiskCleaner32\Languages" "$EXEDIR\App\WiseDiskCleaner\Languages"
+	${Else}
+		${SetEnvironmentVariablesPath} FullAppDir "$EXEDIR\App\WiseDiskCleaner32"
+		Rename "$EXEDIR\App\WiseDiskCleaner\Languages" "$EXEDIR\App\WiseDiskCleaner32\Languages"
+	${EndIf}
+!macroend
+
 ${SegmentPostPrimary}
 	${If} ${FileExists} "$EXEDIR\Data\WiseDiskCleanerAPPDATA\UpdateInfo\UpdateInfo.txt"
 		${ConfigRead} "$EXEDIR\Data\WiseDiskCleanerAPPDATA\UpdateInfo\UpdateInfo.txt" "{" $0
